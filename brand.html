@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>هوية نَوْل البصرية</title>
+<link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;600&family=IBM+Plex+Sans+Arabic:wght@300;400;500&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+<style>
+:root{--madder:#8E1F1F;--indigo:#1C2340;--deep:#11152A;--saffron:#D9A441;--wool:#F4EDE1;--ink:#1A1412;--muted:#7A6A5E}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"IBM Plex Sans Arabic",sans-serif;background:var(--wool);color:var(--ink);line-height:1.8}
+.wrap{width:min(1180px,100% - 32px);margin:auto}
+header{background:var(--deep);color:var(--wool);padding:90px 0 70px;text-align:center}
+header svg{width:110px;color:var(--saffron)}
+header h1{font-family:"Reem Kufi";font-size:clamp(56px,10vw,110px);font-weight:600;line-height:1.1;margin-top:16px}
+header p{font-family:"Cormorant Garamond";font-style:italic;letter-spacing:8px;color:#E9C987;direction:ltr}
+header .tag{margin-top:18px;font-family:"Reem Kufi";font-size:22px;color:var(--saffron)}
+section{padding:70px 0;border-bottom:1px solid rgba(26,20,18,.1)}
+h2{font-family:"Reem Kufi";font-size:34px;font-weight:600;margin-bottom:6px}
+h2 small{font-family:"IBM Plex Sans Arabic";font-size:15px;color:var(--muted);font-weight:400;margin-inline-start:12px}
+.lead{color:#4a3f38;max-width:720px;margin-bottom:30px}
+.logos{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.logos div{aspect-ratio:1;border-radius:18px;display:grid;place-items:center;gap:6px;align-content:center}
+.logos svg{width:70px}
+.logos b{font-family:"Reem Kufi";font-size:30px;font-weight:600;line-height:1}
+.l1{background:var(--deep);color:var(--saffron)}.l1 b{color:var(--wool)}
+.l2{background:var(--madder);color:var(--saffron)}.l2 b{color:var(--wool)}
+.l3{background:#fff;color:var(--madder);border:1px solid rgba(0,0,0,.08)}.l3 b{color:var(--ink)}
+.l4{background:var(--saffron);color:var(--ink)}
+.horiz{margin-top:16px;background:#fff;border-radius:18px;padding:40px;display:flex;align-items:center;justify-content:center;gap:16px}
+.horiz svg{width:44px;color:var(--madder)}
+.horiz b{font-family:"Reem Kufi";font-size:48px;font-weight:600;line-height:1}
+.horiz small{display:block;font-family:"Cormorant Garamond";letter-spacing:5px;font-size:14px;color:var(--muted);direction:ltr;text-align:right}
+.palette{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.sw{border-radius:18px;overflow:hidden;background:#fff;border:1px solid rgba(0,0,0,.06)}
+.sw i{display:block;height:150px}
+.sw div{padding:14px 16px}
+.sw b{font-family:"Reem Kufi";font-size:20px;display:block;font-weight:600}
+.sw code{font-size:13px;color:var(--muted)}
+.sw p{font-size:13px;color:#4a3f38;line-height:1.6;margin-top:4px}
+.type{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.type div{background:#fff;border-radius:18px;padding:28px}
+.type .big{font-size:64px;line-height:1.2}
+.type small{color:var(--muted);display:block}
+.pattern{height:48px;border-radius:12px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='24' viewBox='0 0 48 24'%3E%3Crect width='48' height='24' fill='%238E1F1F'/%3E%3Cpath d='M0 0h48v3H0zM0 21h48v3H0z' fill='%231C2340'/%3E%3Cpath d='M24 4l8 8-8 8-8-8z' fill='%23D9A441'/%3E%3Cpath d='M24 9l3 3-3 3-3-3z' fill='%238E1F1F'/%3E%3Cpath d='M0 4l6 8-6 8zM48 4l-6 8 6 8z' fill='%23F4EDE1' opacity='.85'/%3E%3Ccircle cx='12' cy='12' r='1.6' fill='%23F4EDE1'/%3E%3Ccircle cx='36' cy='12' r='1.6' fill='%23F4EDE1'/%3E%3C/svg%3E") repeat-x;background-size:auto 48px}
+.voice{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.voice div{background:#fff;border-radius:18px;padding:26px}
+.voice h4{font-family:"Reem Kufi";font-size:20px;margin-bottom:8px;color:var(--madder)}
+.voice ul{padding-inline-start:20px}
+.posts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.post{aspect-ratio:4/5;border-radius:18px;overflow:hidden;position:relative;color:var(--wool);display:flex;flex-direction:column;justify-content:flex-end;padding:24px}
+.post img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.post::before{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(17,21,42,.92),transparent 65%);z-index:-1}
+.post{isolation:isolate}
+.post .k{font-family:"Reem Kufi";font-size:30px;line-height:1.25}
+.post .k em{font-style:normal;color:var(--saffron)}
+.post small{opacity:.8}
+.post .m{position:absolute;top:18px;right:18px;display:flex;align-items:center;gap:8px;font-family:"Reem Kufi"}
+.post .m svg{width:16px;color:var(--saffron)}
+.post.solid{background:var(--madder);justify-content:center;text-align:center}
+.post.solid::before{display:none}
+@media(max-width:800px){.logos,.palette,.type,.posts{grid-template-columns:1fr 1fr}.voice{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs><mask id="hole"><rect width="100" height="140" fill="#fff"/><path d="M50 61l6 9-6 9-6-9z" fill="#000"/></mask></defs>
+<symbol id="logo" viewBox="0 0 100 140"><g fill="none" stroke="currentColor" stroke-linecap="round"><path d="M18 1v9M26 1v9M34 1v9M42 1v9M50 1v9M58 1v9M66 1v9M74 1v9M82 1v9M18 130v9M26 130v9M34 130v9M42 130v9M50 130v9M58 130v9M66 130v9M74 130v9M82 130v9" stroke-width="2.2"/><rect x="10" y="12" width="80" height="116" rx="3" stroke-width="3.2"/><rect x="18" y="20" width="64" height="100" stroke-width="1.4"/><path d="M50 30l26 40-26 40-26-40z" stroke-width="2"/><path d="M50 30v-4M50 110v4M24 70h-4M76 70h4" stroke-width="2"/></g><g fill="currentColor"><path d="M50 44l17 26-17 26-17-26z" mask="url(#hole)"/><path d="M18 20h13L18 33zM82 20H69l13 13zM18 120h13l-13-13zM82 120H69l13-13z"/></g></symbol></svg>
+
+<header>
+  <svg viewBox="0 0 100 140"><use href="#logo"/></svg>
+  <h1>نَوْل</h1>
+  <p>NAWL RUGS</p>
+  <div class="tag">كلُّ عُقدةٍ تحكي حكاية</div>
+</header>
+
+<div class="wrap">
+<section>
+  <h2>فكرة الاسم والشعار <small>Concept</small></h2>
+  <p class="lead"><b>النَّوْل</b> هو الإطار الخشبي الذي تُنسج عليه السجادة؛ كلمة عربية قصيرة، سهلة النطق والحفظ، وتحمل أصل الصنعة كلها. الشعار سجادةٌ مرئية من الأعلى: إطارٌ وحاشية، وميدالية مركزية على هيئة معيّن (رمز «الگُل» في السجاد الشرقي)، وزوايا مثلثة، وأهداب في الطرفين. في قلب الميدالية فراغٌ صغير يمثّل «العقدة الأولى».</p>
+  <div class="logos">
+    <div class="l1"><svg viewBox="0 0 100 140"><use href="#logo"/></svg><b>نَوْل</b></div>
+    <div class="l2"><svg viewBox="0 0 100 140"><use href="#logo"/></svg><b>نَوْل</b></div>
+    <div class="l3"><svg viewBox="0 0 100 140"><use href="#logo"/></svg><b>نَوْل</b></div>
+    <div class="l4"><svg viewBox="0 0 100 140"><use href="#logo"/></svg><b>نَوْل</b></div>
+  </div>
+  <div class="horiz"><svg viewBox="0 0 100 140"><use href="#logo"/></svg><div><b>نَوْل</b><small>NAWL RUGS</small></div></div>
+</section>
+
+<section>
+  <h2>الألوان <small>Palette — مستوحاة من الصبغات الطبيعية</small></h2>
+  <p class="lead">كل لون مأخوذ من صبغة حقيقية تُستخدم في صباغة صوف السجاد، فتصبح الهوية امتداداً للمنتج نفسه.</p>
+  <div class="palette">
+    <div class="sw"><i style="background:#8E1F1F"></i><div><b>أحمر الفُوّة</b><code>#8E1F1F</code><p>اللون الأساسي — من جذور نبات الفوّة.</p></div></div>
+    <div class="sw"><i style="background:#1C2340"></i><div><b>النيلة</b><code>#1C2340 / #11152A</code><p>الخلفيات الفاخرة والليلية.</p></div></div>
+    <div class="sw"><i style="background:#D9A441"></i><div><b>الزعفران</b><code>#D9A441</code><p>الشعار، الأزرار، اللمسات الذهبية.</p></div></div>
+    <div class="sw"><i style="background:#F4EDE1"></i><div><b>الصوف الخام</b><code>#F4EDE1</code><p>الخلفيات الفاتحة والمساحات المريحة.</p></div></div>
+    <div class="sw"><i style="background:#1A1412"></i><div><b>الحبر</b><code>#1A1412</code><p>النصوص والتباين العالي.</p></div></div>
+  </div>
+</section>
+
+<section>
+  <h2>الخطوط <small>Typography</small></h2>
+  <div class="type">
+    <div><small>العناوين</small><div class="big" style="font-family:'Reem Kufi';font-weight:600">ريم كوفي</div><small>Reem Kufi — كوفي هندسي يشبه زخارف النسيج</small></div>
+    <div><small>النصوص</small><div class="big" style="font-weight:300">بلكس عربي</div><small>IBM Plex Sans Arabic — واضح ومريح للقراءة</small></div>
+    <div><small>اللمسات اللاتينية</small><div class="big" style="font-family:'Cormorant Garamond';font-style:italic;direction:ltr;text-align:right">Persian</div><small>Cormorant Garamond Italic</small></div>
+  </div>
+</section>
+
+<section>
+  <h2>الحاشية الزخرفية <small>Pattern</small></h2>
+  <p class="lead">شريطٌ مكرر مستوحى من حواشي السجاد، يُستخدم فاصلاً بين الأقسام، وفي أسفل المنشورات، وعلى أكياس التغليف وبطاقات الأصالة.</p>
+  <div class="pattern"></div>
+</section>
+
+<section>
+  <h2>نبرة الصوت <small>Tone of voice</small></h2>
+  <div class="voice">
+    <div><h4>نحن…</h4><ul><li>نحكي عن الحِرفة والناس قبل السعر</li><li>عربيةٌ فصيحة دافئة وقصيرة</li><li>نستخدم الحواس: الملمس، الضوء، الدفء</li><li>نُشعر العميل أنه يقتني إرثاً لا سلعة</li></ul></div>
+    <div><h4>جُمَل جاهزة للمحتوى</h4><ul><li>«كلُّ عُقدةٍ تحكي حكاية.»</li><li>«لا نبيع سجاداً… نختار إرثاً.»</li><li>«١٤ شهراً على النول، وعمرٌ كامل في بيتك.»</li><li>«ألوانٌ تشيخ بجمال.»</li><li>«جرّبها على أرضك، تحت ضوئك، قبل أن تقرّر.»</li></ul></div>
+  </div>
+</section>
+
+<section>
+  <h2>قوالب منشورات <small>Social templates 4:5</small></h2>
+  <div class="posts">
+    <div class="post"><img src="https://images.unsplash.com/photo-1617694820985-a5476fe22722?auto=format&fit=crop&w=700&q=80" alt=""><div class="m"><svg viewBox="0 0 100 140"><use href="#logo"/></svg>نَوْل</div><div class="k">مليون عُقدة…<br><em>ويدٌ واحدة</em></div><small>حكاية سجادة أصفهان الحريرية</small></div>
+    <div class="post solid"><div class="m"><svg viewBox="0 0 100 140"><use href="#logo"/></svg>نَوْل</div><div class="k">جرّبها في بيتك<br><em>قبل أن تقرّر</em></div><small style="margin-top:14px">نحضر لك ٣ سجادات مجاناً</small></div>
+    <div class="post"><img src="https://images.unsplash.com/photo-1652634213812-f0deeb1de78e?auto=format&fit=crop&w=700&q=80" alt=""><div class="m"><svg viewBox="0 0 100 140"><use href="#logo"/></svg>نَوْل</div><div class="k">تبريز الملكي<br><em>١٨,٥٠٠ ر.س</em></div><small>٢٥٠×٣٥٠ · صوف وحرير · ٦٤٠ ألف عقدة/م²</small></div>
+  </div>
+</section>
+</div>
+</body>
+</html>

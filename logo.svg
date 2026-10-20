@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140" width="300" height="420">
+  <defs>
+    <mask id="hole"><rect width="100" height="140" fill="#fff"/><path d="M50 61l6 9-6 9-6-9z" fill="#000"/></mask>
+  </defs>
+  <rect x="10" y="12" width="80" height="116" rx="3" fill="#8E1F1F"/>
+  <g fill="none" stroke="#D9A441" stroke-linecap="round">
+    <path d="M18 1v9M26 1v9M34 1v9M42 1v9M50 1v9M58 1v9M66 1v9M74 1v9M82 1v9M18 130v9M26 130v9M34 130v9M42 130v9M50 130v9M58 130v9M66 130v9M74 130v9M82 130v9" stroke-width="2.2"/>
+    <rect x="10" y="12" width="80" height="116" rx="3" stroke-width="3.2"/>
+    <rect x="18" y="20" width="64" height="100" stroke-width="1.4"/>
+    <path d="M50 30l26 40-26 40-26-40z" stroke-width="2"/>
+    <path d="M50 30v-4M50 110v4M24 70h-4M76 70h4" stroke-width="2"/>
+  </g>
+  <g fill="#D9A441">
+    <path d="M50 44l17 26-17 26-17-26z" mask="url(#hole)"/>
+    <path d="M18 20h13L18 33zM82 20H69l13 13zM18 120h13l-13-13zM82 120H69l13-13z"/>
+  </g>
+</svg>
