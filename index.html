@@ -3,782 +3,541 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>نَوْل | معرض السجاد اليدوي الفاخر</title>
-<meta name="description" content="نَوْل — معرض السجاد الفارسي والتركي والكليم اليدوي الأصيل. كل عقدة تحكي حكاية.">
+<title>نَوْل — حكاية عُقدة</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --madder:#8E1F1F;      /* أحمر الفُوّة */
-  --madder-deep:#5E1214;
-  --indigo:#1C2340;      /* النيلة */
-  --indigo-deep:#11152A;
-  --saffron:#D9A441;     /* الزعفران */
-  --saffron-soft:#E9C987;
-  --wool:#F4EDE1;        /* الصوف الخام */
-  --wool-2:#EADFCC;
-  --ink:#1A1412;
-  --muted:#7A6A5E;
-  --line:rgba(217,164,65,.28);
-  --radius:18px;
-  --kufi:"Reem Kufi",serif;
-  --sans:"IBM Plex Sans Arabic",system-ui,sans-serif;
-  --latin:"Cormorant Garamond",serif;
-  --border-strip:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='24' viewBox='0 0 48 24'%3E%3Crect width='48' height='24' fill='%238E1F1F'/%3E%3Cpath d='M0 0h48v3H0zM0 21h48v3H0z' fill='%231C2340'/%3E%3Cpath d='M24 4l8 8-8 8-8-8z' fill='%23D9A441'/%3E%3Cpath d='M24 9l3 3-3 3-3-3z' fill='%238E1F1F'/%3E%3Cpath d='M0 4l6 8-6 8zM48 4l-6 8 6 8z' fill='%23F4EDE1' opacity='.85'/%3E%3Ccircle cx='12' cy='12' r='1.6' fill='%23F4EDE1'/%3E%3Ccircle cx='36' cy='12' r='1.6' fill='%23F4EDE1'/%3E%3C/svg%3E");
+  --madder:#8E1F1F;--madder-deep:#4A0E10;--indigo:#1C2340;--night:#0B0E1C;
+  --saffron:#D9A441;--saffron-soft:#EBCB8B;--wool:#F4EDE1;--ink:#1A1412;
+  --kufi:"Reem Kufi",serif;--sans:"IBM Plex Sans Arabic",sans-serif;--latin:"Cormorant Garamond",serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:var(--sans);background:var(--indigo-deep);color:var(--wool);line-height:1.8;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-img{display:block;max-width:100%}
-a{color:inherit;text-decoration:none}
-button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
-.wrap{width:min(1240px,100% - 48px);margin-inline:auto}
+html,body{background:var(--night);color:var(--wool);font-family:var(--sans);overflow-x:hidden}
+body.filming,body.filming *{cursor:none!important}
+img{display:block}
+.chap{position:relative;height:100vh;overflow:hidden}
+
+/* ---------- global HUD ---------- */
+.grain{position:fixed;inset:-50%;z-index:90;pointer-events:none;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain 1s steps(6) infinite}
+@keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-4%,3%)}40%{transform:translate(3%,-2%)}60%{transform:translate(-2%,-4%)}80%{transform:translate(4%,2%)}}
+.vignette{position:fixed;inset:0;z-index:89;pointer-events:none;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.55))}
+.hud-brand{position:fixed;top:28px;right:36px;z-index:80;display:flex;align-items:center;gap:10px;mix-blend-mode:difference}
+.hud-brand svg{width:22px;color:var(--saffron)}
+.hud-brand b{font-family:var(--kufi);font-size:24px;font-weight:600;color:var(--wool)}
+.hud-chap{position:fixed;bottom:30px;right:36px;z-index:80;display:flex;align-items:baseline;gap:12px;font-family:var(--kufi)}
+.hud-chap .n{font-size:14px;color:var(--saffron)}
+.hud-chap .t{font-size:18px;overflow:hidden;height:30px}
+.hud-chap .t span{display:block;transition:transform .6s cubic-bezier(.7,0,.2,1)}
+.thread{position:fixed;top:18vh;bottom:18vh;left:30px;width:2px;z-index:80;background:rgba(244,237,225,.12)}
+.thread i{position:absolute;inset:0 0 auto;height:0;background:var(--saffron);box-shadow:0 0 12px var(--saffron)}
+.thread i::after{content:"";position:absolute;bottom:-5px;left:-4px;width:10px;height:10px;transform:rotate(45deg);background:var(--saffron)}
+.film{position:fixed;bottom:26px;left:56px;z-index:85;display:flex;align-items:center;gap:10px;padding:12px 20px;border-radius:999px;background:rgba(244,237,225,.08);border:1px solid rgba(217,164,65,.45);color:var(--wool);font:500 14px var(--sans);backdrop-filter:blur(10px);cursor:pointer;transition:.3s}
+.film:hover{background:var(--saffron);color:var(--ink)}
+.film svg{width:18px}
+.filming .film,.filming .hint,.filming .cursor{opacity:0;pointer-events:none}
+.countdown{position:fixed;inset:0;z-index:95;display:grid;place-items:center;font-family:var(--kufi);font-size:30vh;color:var(--saffron);pointer-events:none;opacity:0}
+.cursor{position:fixed;top:0;left:0;z-index:99;width:14px;height:14px;margin:-7px 0 0 -7px;transform:rotate(45deg);border:1.5px solid var(--saffron);pointer-events:none;transition:width .3s,height .3s,margin .3s,background .3s;mix-blend-mode:difference}
+.cursor.big{width:54px;height:54px;margin:-27px 0 0 -27px;background:rgba(217,164,65,.15)}
+@media (hover:none){.cursor{display:none}}
+
 .kufi{font-family:var(--kufi)}
-.strip{height:24px;background:var(--border-strip) repeat-x;background-size:auto 24px}
+.w{display:inline-block;white-space:pre}
+.cap-sm{font-size:13px;letter-spacing:3px;color:var(--saffron-soft);font-family:var(--latin);font-style:italic;direction:ltr}
 
-/* ======== Loader ======== */
-#loader{position:fixed;inset:0;z-index:999;background:var(--indigo-deep);display:grid;place-items:center;transition:transform 1s cubic-bezier(.8,0,.2,1)}
-#loader.done{transform:translateY(-100%)}
-#loader .mark{width:84px;color:var(--saffron)}
-#loader .mark .draw{stroke-dasharray:420;stroke-dashoffset:420;animation:draw 1.6s ease forwards}
-#loader .mark .fill{opacity:0;animation:fadein .6s 1.2s forwards}
-#loader .name{font-family:var(--kufi);font-size:42px;color:var(--wool);text-align:center;margin-top:10px;opacity:0;letter-spacing:2px;animation:fadein .7s 1s forwards}
-@keyframes draw{to{stroke-dashoffset:0}}
-@keyframes fadein{to{opacity:1}}
+/* ---------- 01 intro ---------- */
+#intro{background:radial-gradient(ellipse at 50% 60%,#1a1f3d,var(--night) 70%)}
+#intro .lines{position:absolute;inset:0;display:grid;place-items:center;text-align:center;z-index:3}
+#intro h1{font-family:var(--kufi);font-weight:600;font-size:clamp(40px,7vw,116px);line-height:1.15;position:absolute;width:100%;padding:0 6vw}
+#intro h1 em{font-style:normal;color:var(--saffron)}
+#intro .l2{opacity:1}
+#intro svg.thr{position:absolute;inset:0;width:100%;height:100%;z-index:2}
+#intro .warps{position:absolute;inset:6vh 0;display:flex;justify-content:center;gap:clamp(8px,1.1vw,16px);z-index:1}
+#intro .warps i{width:1.5px;background:linear-gradient(transparent,rgba(244,237,225,.55) 15%,rgba(244,237,225,.55) 85%,transparent);transform:scaleY(0)}
+.hint{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);z-index:4;display:grid;justify-items:center;gap:10px;font-size:13px;opacity:.7}
+.hint i{width:1px;height:46px;background:linear-gradient(var(--saffron),transparent);animation:drip 1.8s infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+.intro-top{position:absolute;top:13vh;width:100%;text-align:center;z-index:3}
 
-/* ======== Nav ======== */
-.nav{position:fixed;inset:0 0 auto;z-index:50;transition:background .4s,backdrop-filter .4s,padding .4s;padding:22px 0}
-.nav.solid{background:rgba(17,21,42,.82);backdrop-filter:blur(14px);padding:12px 0;border-bottom:1px solid var(--line)}
-.nav .wrap{display:flex;align-items:center;gap:32px}
-.brand{display:flex;align-items:center;gap:12px}
-.brand svg{width:30px;color:var(--saffron)}
-.brand b{font-family:var(--kufi);font-size:28px;font-weight:600;line-height:1}
-.brand small{display:block;font-family:var(--latin);letter-spacing:4px;font-size:11px;color:var(--saffron-soft);line-height:1.2;direction:ltr;text-align:right}
-.nav ul{display:flex;gap:28px;list-style:none;margin-inline-start:auto}
-.nav ul a{font-size:15px;opacity:.85;position:relative;padding:4px 0}
-.nav ul a::after{content:"";position:absolute;inset:auto 0 -2px;height:2px;background:var(--saffron);transform:scaleX(0);transition:.3s}
-.nav ul a:hover::after{transform:scaleX(1)}
-.nav .acts{display:flex;align-items:center;gap:14px}
-.wish{position:relative;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center}
-.wish svg{width:18px}
-.wish i{position:absolute;top:-4px;left:-4px;background:var(--madder);font-style:normal;font-size:11px;min-width:20px;height:20px;border-radius:10px;display:grid;place-items:center;transform:scale(0);transition:.3s cubic-bezier(.3,1.6,.5,1)}
-.wish i.on{transform:scale(1)}
-.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 26px;border-radius:999px;font-weight:500;font-size:15px;transition:.3s;white-space:nowrap}
-.btn-gold{background:var(--saffron);color:var(--ink)}
-.btn-gold:hover{background:var(--saffron-soft);transform:translateY(-2px);box-shadow:0 10px 30px -10px var(--saffron)}
-.btn-ghost{border:1px solid rgba(244,237,225,.4)}
-.btn-ghost:hover{background:rgba(244,237,225,.1)}
-.btn-red{background:var(--madder);color:var(--wool)}
-.btn-red:hover{background:var(--madder-deep)}
-.burger{display:none}
+/* ---------- 02 loom ---------- */
+#loom{background:radial-gradient(ellipse at 50% 45%,#211a2e,var(--night) 75%);perspective:1400px}
+.stage{position:absolute;inset:0;display:grid;place-items:center}
+.rugwrap{position:relative;transform-style:preserve-3d;will-change:transform}
+.rugwrap canvas{display:block;height:min(68vh,900px);width:auto;box-shadow:0 0 0 rgba(0,0,0,0);transition:box-shadow .3s}
+.beam{position:absolute;left:-6%;right:-6%;height:22px;border-radius:6px;background:linear-gradient(#7a5233,#4b301c);box-shadow:0 8px 20px rgba(0,0,0,.5),inset 0 2px 0 rgba(255,255,255,.15)}
+.beam.top{top:-34px}.beam.bot{bottom:-34px}
+.fringe{position:absolute;left:3%;right:3%;height:22px;background:repeating-linear-gradient(90deg,#efe3cc 0 2px,transparent 2px 7px)}
+.fringe.t{top:-22px;opacity:0}.fringe.b{bottom:-22px}
+.side{position:absolute;top:50%;transform:translateY(-50%);width:min(320px,26vw);z-index:3}
+.side.r{right:6vw}.side.l{left:6vw;text-align:left}
+.counter{font-family:var(--kufi);font-size:clamp(34px,4.4vw,64px);color:var(--saffron);line-height:1.1}
+.side small{display:block;opacity:.65;font-size:14px;margin-top:4px}
+.side .row{margin-bottom:34px}
+.caption{position:absolute;bottom:6vh;left:0;right:0;text-align:center;z-index:3;font-family:var(--kufi);font-size:clamp(22px,2.4vw,34px)}
+.caption span{position:absolute;inset:0 0 auto;opacity:0}
+.done-title{position:absolute;top:12vh;left:0;right:0;text-align:center;z-index:4;font-family:var(--kufi);font-weight:600;font-size:clamp(50px,9vw,140px);line-height:1.05;opacity:0}
+.done-title em{font-style:normal;color:var(--saffron);display:block;font-size:.42em;font-weight:500}
 
-/* ======== Hero ======== */
-.hero{position:relative;height:100vh;min-height:680px;overflow:hidden;display:flex;align-items:flex-end}
-.hero .slide{position:absolute;inset:0;opacity:0;transition:opacity 1.6s}
-.hero .slide.on{opacity:1}
-.hero .slide img{width:100%;height:100%;object-fit:cover;transform:scale(1.15)}
-.hero .slide.on img{animation:kb 9s linear forwards}
-@keyframes kb{from{transform:scale(1.15) translateX(-2%)}to{transform:scale(1.02) translateX(1%)}}
-.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,var(--indigo-deep) 2%,rgba(17,21,42,.55) 45%,rgba(17,21,42,.25)),linear-gradient(to left,rgba(17,21,42,.75),transparent 70%)}
-.hero .content{position:relative;z-index:2;padding-bottom:110px}
-.eyebrow{display:inline-flex;align-items:center;gap:12px;color:var(--saffron-soft);font-size:14px;letter-spacing:1px}
-.eyebrow::before{content:"";width:36px;height:1px;background:currentColor}
-.hero h1{font-family:var(--kufi);font-weight:600;font-size:clamp(48px,8vw,112px);line-height:1.12;margin:18px 0 22px}
-.hero h1 em{font-style:normal;color:var(--saffron);position:relative}
-.hero h1 .ln{display:block;overflow:hidden}
-.hero h1 .ln span{display:inline-block;transform:translateY(110%);transition:transform 1.1s cubic-bezier(.2,.8,.2,1)}
-.ready .hero h1 .ln span{transform:none}
-.ready .hero h1 .ln:nth-child(2) span{transition-delay:.15s}
-.hero p.lead{max-width:560px;font-size:18px;opacity:.88;font-weight:300}
-.hero .ctas{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap}
-.hero .fade{opacity:0;transform:translateY(20px);transition:1s .5s}
-.ready .hero .fade{opacity:1;transform:none}
-.hero-meta{position:absolute;z-index:2;inset:auto 0 0;border-top:1px solid var(--line);background:rgba(17,21,42,.5);backdrop-filter:blur(8px)}
-.hero-meta .wrap{display:flex;justify-content:space-between;align-items:center;padding:18px 0;font-size:14px;gap:20px}
-.hero-meta b{font-family:var(--kufi);color:var(--saffron);font-size:20px;margin-inline-end:6px}
-.dots{display:flex;gap:8px}
-.dots button{width:28px;height:3px;background:rgba(244,237,225,.3);border-radius:2px;transition:.4s}
-.dots button.on{background:var(--saffron);width:48px}
-.seal{position:absolute;z-index:2;left:6%;top:24%;width:150px;height:150px}
-.seal svg{width:100%;height:100%;animation:spin 22s linear infinite}
-.seal .core{position:absolute;inset:38px;border-radius:50%;background:var(--madder);display:grid;place-items:center;color:var(--saffron);box-shadow:0 0 0 1px var(--saffron)}
-.seal .core svg{width:30px;animation:none}
-@keyframes spin{to{transform:rotate(360deg)}}
+/* ---------- 03 dyes ---------- */
+#dyes{background:var(--night)}
+#dyes .pre{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+#dyes .pre h2{font-family:var(--kufi);font-size:clamp(40px,6.5vw,100px);font-weight:600;line-height:1.2}
+#dyes .pre h2 em{font-style:normal;color:var(--saffron)}
+.dye{position:absolute;inset:0;clip-path:circle(0% at 50% 50%);display:grid;grid-template-columns:1.1fr 1fr;align-items:center;padding:0 9vw;gap:5vw}
+.dye .word{font-family:var(--kufi);font-weight:700;font-size:clamp(70px,13vw,220px);line-height:1;letter-spacing:-2px}
+.dye p{font-size:clamp(17px,1.5vw,22px);max-width:460px;margin-top:22px;opacity:.9}
+.dye .hex{font-family:var(--latin);font-style:italic;font-size:22px;margin-top:18px;opacity:.7;direction:ltr;text-align:right}
+.dye .mini{justify-self:center;width:min(30vw,380px);aspect-ratio:61/91;background-size:cover;box-shadow:0 50px 80px -30px rgba(0,0,0,.6);animation:float 6s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-18px) rotate(-2deg)}}
+.dye .dust{position:absolute;inset:0;pointer-events:none}
+.dye .dust b{position:absolute;border-radius:50%;background:currentColor;opacity:.25;animation:rise linear infinite}
+@keyframes rise{from{transform:translateY(20vh)}to{transform:translateY(-110vh)}}
+.d1{background:var(--madder);color:var(--wool)}
+.d2{background:#22306A;color:var(--wool)}
+.d3{background:var(--saffron);color:var(--ink)}
 
-/* ======== Marquee ======== */
-.marquee{background:var(--saffron);color:var(--ink);overflow:hidden;padding:16px 0;font-family:var(--kufi);font-size:22px;white-space:nowrap}
-.marquee .track{display:inline-flex;animation:mq 38s linear infinite}
-.marquee span{padding:0 26px;display:inline-flex;align-items:center;gap:52px}
-.marquee span::after{content:"◆";font-size:12px;color:var(--madder)}
-@keyframes mq{to{transform:translateX(50%)}}
+/* ---------- 04 macro ---------- */
+#macro{background:#000}
+#macro img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform-origin:50% 50%;will-change:transform}
+#macro .shade{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 30%,rgba(0,0,0,.6))}
+#macro .t{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font-family:var(--kufi);font-weight:600;z-index:2}
+#macro .t span{position:absolute;font-size:clamp(40px,6vw,96px);line-height:1.2;text-shadow:0 10px 40px rgba(0,0,0,.6)}
+#macro .t span em{font-style:normal;color:var(--saffron)}
+#macro .lens{position:absolute;width:30vmin;height:30vmin;border:1.5px solid var(--saffron);border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%) scale(1.6);opacity:0;z-index:2;box-shadow:0 0 0 200vmax rgba(0,0,0,.35)}
 
-/* ======== Section heads ======== */
-section{position:relative}
-.sec{padding:130px 0}
-.head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:56px;flex-wrap:wrap}
-.head h2{font-family:var(--kufi);font-size:clamp(36px,5vw,64px);font-weight:600;line-height:1.15;margin-top:10px}
-.head h2 em{font-style:normal;color:var(--saffron)}
-.head p{max-width:440px;opacity:.75}
-.light{background:var(--wool);color:var(--ink)}
-.light .eyebrow{color:var(--madder)}
-.light .head h2 em{color:var(--madder)}
+/* ---------- 05 bazaar ---------- */
+#bazaar{background:linear-gradient(#170f12,#2a1416 70%,#130b0c)}
+.rope{position:absolute;top:17vh;left:0;right:0;height:2px;background:repeating-linear-gradient(90deg,#9a7a52 0 6px,#6f5536 6px 12px);z-index:1}
+.track{position:absolute;top:17vh;right:0;display:flex;gap:4vw;padding-inline:8vw;align-items:flex-start;will-change:transform}
+.track .intro-card{width:34vw;min-width:320px;padding-top:12vh}
+.track .intro-card h2{font-family:var(--kufi);font-size:clamp(50px,7vw,110px);font-weight:600;line-height:1.05}
+.track .intro-card h2 em{font-style:normal;color:var(--saffron)}
+.track .intro-card p{opacity:.75;font-size:18px;margin-top:16px;max-width:380px}
+.hang{flex:0 0 auto;width:clamp(220px,20vw,320px);transform-origin:50% 0;animation:sway 5s ease-in-out infinite}
+@keyframes sway{0%,100%{transform:rotate(1.2deg)}50%{transform:rotate(-1.2deg)}}
+.hang .sw{transform-origin:50% 0}
+.hang .pins{display:flex;justify-content:space-between;padding:0 18%;height:14px;margin-top:-7px;position:relative;z-index:2}
+.hang .pins i{width:8px;height:22px;border-radius:2px;background:#c9a66b;box-shadow:0 2px 4px rgba(0,0,0,.5)}
+.hang .rug{position:relative;aspect-ratio:2/3;background-size:cover;background-position:center;box-shadow:0 40px 60px -25px rgba(0,0,0,.9)}
+.hang .rug::after{content:"";position:absolute;left:4%;right:4%;bottom:-16px;height:16px;background:repeating-linear-gradient(90deg,#e9dcc3 0 2px,transparent 2px 6px)}
+.hang .lab{margin-top:30px;display:flex;justify-content:space-between;align-items:baseline}
+.hang .lab b{font-family:var(--kufi);font-size:22px;font-weight:500}
+.hang .lab span{font-size:13px;opacity:.6}
+.hang:nth-child(odd){margin-top:4vh}
 
-/* ======== Collections bento ======== */
-.bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:270px;gap:18px}
-.tile{position:relative;border-radius:var(--radius);overflow:hidden;isolation:isolate}
-.tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.8,.2,1);z-index:-2}
-.tile::before{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(17,21,42,.9),transparent 60%);z-index:-1}
-.tile:hover img{transform:scale(1.08) rotate(.6deg)}
-.tile .t{position:absolute;inset:auto 24px 22px;color:var(--wool)}
-.tile h3{font-family:var(--kufi);font-size:30px;font-weight:500;line-height:1.2}
-.tile .t small{font-family:var(--latin);font-style:italic;font-size:17px;color:var(--saffron-soft);direction:ltr;display:block}
-.tile .count{position:absolute;top:18px;right:18px;background:rgba(244,237,225,.16);backdrop-filter:blur(8px);color:var(--wool);border-radius:999px;padding:4px 14px;font-size:13px}
-.tile .go{position:absolute;top:18px;left:18px;width:44px;height:44px;border-radius:50%;background:var(--saffron);color:var(--ink);display:grid;place-items:center;transform:scale(0) rotate(-45deg);transition:.4s}
-.tile:hover .go{transform:none}
-.t1{grid-column:span 2;grid-row:span 2}
-.t2{grid-column:span 2}
-.t5{grid-column:span 2}
+/* ---------- 06 flight ---------- */
+#flight{background:linear-gradient(#070a18 0%,#151a3a 45%,#3a1c2b 78%,#6b2a24 100%);perspective:900px}
+.stars{position:absolute;inset:0}
+.stars i{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;animation:tw 3s ease-in-out infinite}
+@keyframes tw{50%{opacity:.2}}
+.moon{position:absolute;top:12vh;left:14vw;width:110px;height:110px;border-radius:50%;box-shadow:-22px 10px 0 0 #f3e3b6;transform:rotate(-20deg);filter:drop-shadow(0 0 30px rgba(243,227,182,.35))}
+.dunes{position:absolute;left:-10%;right:-10%;bottom:0;width:120%}
+.carpet{position:absolute;top:44%;left:50%;width:min(40vw,520px);aspect-ratio:91/61;margin:-10% 0 0 -20%;transform-style:preserve-3d;will-change:transform;z-index:3}
+.carpet .body{position:absolute;inset:0;display:flex;direction:ltr;transform:rotateX(58deg);transform-style:preserve-3d}
+.carpet .body i{flex:1;background-repeat:no-repeat;animation:wave 2.2s ease-in-out infinite;box-shadow:0 30px 30px -20px rgba(0,0,0,.4)}
+@keyframes wave{0%,100%{transform:translateZ(-10px)}50%{transform:translateZ(14px)}}
+.carpet .shadowc{position:absolute;inset:auto 10% -60% 10%;height:30%;background:radial-gradient(ellipse,rgba(0,0,0,.45),transparent 70%);filter:blur(10px)}
+.sparks{position:absolute;inset:0;pointer-events:none;z-index:2}
+.sparks b{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--saffron-soft);box-shadow:0 0 8px var(--saffron)}
+#flight .t{position:absolute;inset:0;display:grid;place-items:center;text-align:center;z-index:4;pointer-events:none}
+#flight .t span{position:absolute;font-family:var(--kufi);font-weight:600;font-size:clamp(46px,7.5vw,120px);opacity:0;top:14vh}
+#flight .t span em{font-style:normal;color:var(--saffron)}
 
-/* ======== Story ======== */
-.story{background:var(--madder-deep);overflow:hidden}
-.story::before{content:"";position:absolute;inset:0;opacity:.06;background:var(--border-strip);background-size:96px 48px}
-.story .grid{display:grid;grid-template-columns:1fr 1.05fr;gap:80px;align-items:center;position:relative}
-.story .pics{position:relative;height:640px}
-.story .pics img{position:absolute;object-fit:cover;border-radius:var(--radius);box-shadow:0 40px 80px -30px rgba(0,0,0,.7)}
-.story .p1{inset:0 0 120px 90px;width:calc(100% - 90px);height:calc(100% - 120px)}
-.story .p2{width:52%;height:280px;bottom:0;left:0;border:8px solid var(--madder-deep)}
-.story .badge{position:absolute;top:30px;left:30px;background:var(--saffron);color:var(--ink);padding:18px 22px;border-radius:14px;font-family:var(--kufi);text-align:center;line-height:1.2;z-index:2}
-.story .badge b{font-size:40px;display:block}
-.steps{margin-top:36px;display:grid;gap:4px}
-.step{display:grid;grid-template-columns:56px 1fr;gap:18px;padding:18px 0;border-bottom:1px solid rgba(244,237,225,.14)}
-.step .n{font-family:var(--kufi);color:var(--saffron);font-size:30px;line-height:1}
-.step h4{font-family:var(--kufi);font-size:22px;font-weight:500;line-height:1.3}
-.step p{opacity:.75;font-size:15px}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);margin-top:100px;border-top:1px solid var(--line);position:relative}
-.stats div{padding:34px 10px 0;text-align:center;border-inline-start:1px solid var(--line)}
-.stats div:first-child{border:0}
-.stats b{font-family:var(--kufi);font-size:clamp(38px,4.5vw,58px);color:var(--saffron);display:block;line-height:1.1}
-.stats span{opacity:.75;font-size:15px}
+/* ---------- 07 forge ---------- */
+#forge{height:auto;min-height:100vh;background:radial-gradient(ellipse at 30% 50%,#24183a,var(--night) 70%);display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:6vw;padding:12vh 9vw}
+#forge h2{font-family:var(--kufi);font-weight:600;font-size:clamp(44px,5.8vw,92px);line-height:1.1}
+#forge h2 em{font-style:normal;color:var(--saffron)}
+#forge p{opacity:.75;font-size:18px;margin:20px 0 30px;max-width:460px}
+.forge-canvas{justify-self:center;position:relative}
+.forge-canvas canvas{height:min(76vh,900px);width:auto;display:block;box-shadow:0 60px 90px -40px #000}
+.forge-canvas::before,.forge-canvas::after{content:"";position:absolute;left:3%;right:3%;height:18px;background:repeating-linear-gradient(90deg,#efe3cc 0 2px,transparent 2px 7px)}
+.forge-canvas::before{top:-18px}.forge-canvas::after{bottom:-18px}
+.serial{font-family:var(--kufi);font-size:28px;color:var(--saffron);margin-bottom:14px}
+.specs{display:grid;grid-template-columns:repeat(3,auto);gap:6px 30px;justify-content:start;margin-bottom:34px;font-size:14px}
+.specs small{opacity:.55;display:block}
+.chips{display:flex;gap:10px;margin-bottom:26px}
+.chips button{width:40px;height:40px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:.3s;position:relative;overflow:hidden}
+.chips button.on{border-color:var(--wool);transform:scale(1.12)}
+.chips button i{position:absolute;inset:0;clip-path:polygon(0 0,100% 0,0 100%)}
+.weave-btn{display:inline-flex;align-items:center;gap:12px;padding:16px 32px;border-radius:999px;background:var(--saffron);color:var(--ink);font:600 17px var(--sans);border:0;cursor:pointer;transition:.3s}
+.weave-btn:hover{transform:translateY(-3px);box-shadow:0 18px 40px -14px var(--saffron)}
+.weave-btn svg{width:20px;transition:transform .6s}
+.weave-btn:hover svg{transform:rotate(180deg)}
 
-/* ======== Products ======== */
-.filters{display:flex;gap:10px;flex-wrap:wrap}
-.filters button{padding:9px 20px;border-radius:999px;border:1px solid rgba(26,20,18,.18);font-size:14px;transition:.3s}
-.filters button.on,.filters button:hover{background:var(--ink);color:var(--wool);border-color:var(--ink)}
-.products{display:grid;grid-template-columns:repeat(4,1fr);gap:28px 22px}
-.card{cursor:pointer;transition:opacity .4s,transform .4s}
-.card.hide{display:none}
-.card .ph{position:relative;aspect-ratio:3/4;border-radius:14px;overflow:hidden;background:var(--wool-2)}
-.card .ph img{width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.2,.8,.2,1)}
-.card:hover .ph img{transform:scale(1.07)}
-.card .tag{position:absolute;top:14px;right:14px;background:var(--wool);color:var(--madder);font-size:12px;font-weight:600;padding:3px 12px;border-radius:999px}
-.card .tag.gold{background:var(--saffron);color:var(--ink)}
-.card .heart{position:absolute;top:12px;left:12px;width:38px;height:38px;border-radius:50%;background:rgba(244,237,225,.9);color:var(--madder);display:grid;place-items:center;transition:.3s}
-.card .heart svg{width:17px}
-.card .heart.on{background:var(--madder);color:var(--wool)}
-.card .heart.on svg{fill:currentColor}
-.card .quick{position:absolute;inset:auto 12px 12px;background:var(--ink);color:var(--wool);text-align:center;border-radius:10px;padding:10px;font-size:14px;transform:translateY(130%);transition:.4s}
-.card:hover .quick{transform:none}
-.card .meta{padding:14px 2px 0}
-.card .origin{font-size:13px;color:var(--muted)}
-.card h3{font-family:var(--kufi);font-size:22px;font-weight:500;line-height:1.35}
-.card .price{display:flex;gap:10px;align-items:baseline;margin-top:2px}
-.card .price b{font-size:18px;color:var(--madder)}
-.card .price s{font-size:14px;color:var(--muted)}
+/* ---------- 08 outro ---------- */
+#outro{background:var(--night);display:grid;place-items:center;text-align:center}
+#outro svg.big{width:clamp(90px,10vw,140px);color:var(--saffron)}
+#outro .draw{stroke-dasharray:420;stroke-dashoffset:420}
+#outro .fillm{opacity:0}
+#outro h2{font-family:var(--kufi);font-weight:600;font-size:clamp(70px,12vw,190px);line-height:1;margin-top:18px}
+#outro .tag{font-family:var(--kufi);font-size:clamp(22px,2.6vw,38px);color:var(--saffron);margin-top:12px}
+#outro .ctas{display:flex;gap:14px;justify-content:center;margin-top:40px;flex-wrap:wrap}
+#outro a{padding:15px 30px;border-radius:999px;font-size:16px;text-decoration:none;color:var(--wool);border:1px solid rgba(244,237,225,.35);transition:.3s}
+#outro a.g{background:var(--saffron);color:var(--ink);border-color:var(--saffron)}
+#outro a:hover{transform:translateY(-3px)}
+#outro .addr{margin-top:30px;opacity:.5;font-size:14px}
+.reveal-up{opacity:0;transform:translateY(30px)}
 
-/* ======== Modal ======== */
-.modal{position:fixed;inset:0;z-index:100;background:rgba(17,21,42,.75);backdrop-filter:blur(6px);display:grid;place-items:center;padding:24px;opacity:0;pointer-events:none;transition:.4s}
-.modal.on{opacity:1;pointer-events:auto}
-.modal .box{background:var(--wool);color:var(--ink);border-radius:22px;overflow:hidden;width:min(1000px,100%);max-height:calc(100vh - 48px);display:grid;grid-template-columns:1.05fr 1fr;transform:translateY(30px) scale(.97);transition:.5s cubic-bezier(.2,.8,.2,1)}
-.modal.on .box{transform:none}
-.modal .box>img{width:100%;height:100%;object-fit:cover;min-height:560px}
-.modal .info{padding:44px 40px;overflow:auto;position:relative}
-.modal .x{position:absolute;top:16px;left:16px;width:40px;height:40px;border-radius:50%;background:var(--wool-2);font-size:20px}
-.modal h3{font-family:var(--kufi);font-size:38px;font-weight:600;line-height:1.2;margin:6px 0 10px}
-.modal .desc{color:#4a3f38}
-.specs{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(26,20,18,.12);border-radius:12px;overflow:hidden;margin:24px 0}
-.specs div{background:var(--wool);padding:12px 14px}
-.specs small{display:block;color:var(--muted);font-size:12px}
-.specs b{font-weight:500}
-.modal .pr{display:flex;align-items:baseline;gap:12px;margin-bottom:22px}
-.modal .pr b{font-family:var(--kufi);font-size:34px;color:var(--madder)}
-.modal .pr span{color:var(--muted);font-size:14px}
-.modal .row{display:flex;gap:10px;flex-wrap:wrap}
-.cert{display:flex;gap:10px;align-items:center;margin-top:22px;font-size:13px;color:var(--muted)}
-.cert svg{width:22px;color:var(--saffron)}
-
-/* ======== Size tool ======== */
-.sizer{background:var(--indigo)}
-.sizer .grid{display:grid;grid-template-columns:1fr 1.15fr;gap:70px;align-items:center}
-.ctrl{margin-top:34px;display:grid;gap:26px}
-.ctrl label{display:flex;justify-content:space-between;font-size:15px;margin-bottom:10px}
-.ctrl label b{font-family:var(--kufi);color:var(--saffron);font-size:20px}
-input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:2px;background:rgba(244,237,225,.2);outline:none}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:var(--saffron);border:4px solid var(--indigo);box-shadow:0 0 0 1px var(--saffron);cursor:grab}
-input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--saffron);border:4px solid var(--indigo)}
-.seg{display:flex;gap:8px;flex-wrap:wrap}
-.seg button{padding:8px 18px;border-radius:999px;border:1px solid rgba(244,237,225,.25);font-size:14px;transition:.3s}
-.seg button.on{background:var(--saffron);color:var(--ink);border-color:var(--saffron)}
-.result{margin-top:34px;padding:26px;border-radius:var(--radius);background:rgba(244,237,225,.06);border:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
-.result small{opacity:.7;font-size:14px}
-.result b{display:block;font-family:var(--kufi);font-size:40px;color:var(--saffron);line-height:1.2;direction:ltr;text-align:right}
-.plan{background:var(--wool);border-radius:22px;padding:28px;box-shadow:0 40px 80px -40px #000}
-.plan svg{width:100%;height:auto;display:block}
-.plan .rug{transition:all .6s cubic-bezier(.2,.8,.2,1)}
-.plan .cap{display:flex;justify-content:space-between;color:var(--muted);font-size:13px;margin-top:12px}
-
-/* ======== Services ======== */
-.services{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(26,20,18,.12);border-radius:var(--radius);overflow:hidden}
-.svc{background:var(--wool);padding:40px 34px;transition:.4s;position:relative}
-.svc:hover{background:var(--ink);color:var(--wool)}
-.svc .ic{width:58px;height:58px;border-radius:16px;background:var(--wool-2);color:var(--madder);display:grid;place-items:center;margin-bottom:22px;transition:.4s}
-.svc:hover .ic{background:var(--saffron);color:var(--ink)}
-.svc .ic svg{width:28px}
-.svc h4{font-family:var(--kufi);font-size:24px;font-weight:500;line-height:1.3;margin-bottom:8px}
-.svc p{font-size:15px;opacity:.75}
-.svc .num{position:absolute;top:30px;left:30px;font-family:var(--latin);font-size:18px;opacity:.35}
-
-/* ======== Lookbook ======== */
-.look{overflow:hidden;padding-bottom:130px}
-.rail{display:flex;gap:22px;padding-inline:max(24px,calc((100vw - 1240px)/2));overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;cursor:grab}
-.rail::-webkit-scrollbar{display:none}
-.shot{flex:0 0 auto;width:min(440px,80vw);scroll-snap-align:start;position:relative}
-.shot:nth-child(even){margin-top:70px}
-.shot img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:var(--radius)}
-.shot figcaption{display:flex;justify-content:space-between;padding-top:14px;font-size:14px;opacity:.85}
-.shot figcaption b{font-family:var(--kufi);font-weight:500;font-size:18px}
-.rail-nav{display:flex;gap:10px}
-.rail-nav button{width:52px;height:52px;border-radius:50%;border:1px solid rgba(244,237,225,.3);font-size:20px;transition:.3s}
-.rail-nav button:hover{background:var(--saffron);color:var(--ink);border-color:var(--saffron)}
-
-/* ======== Testimonials ======== */
-.quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-.q{background:var(--wool-2);border-radius:var(--radius);padding:34px;display:flex;flex-direction:column;gap:20px}
-.q .stars{color:var(--saffron);letter-spacing:3px}
-.q p{font-size:17px;flex:1}
-.q .who{display:flex;align-items:center;gap:12px}
-.q .av{width:46px;height:46px;border-radius:50%;background:var(--madder);color:var(--wool);display:grid;place-items:center;font-family:var(--kufi);font-size:20px}
-.q .who b{display:block;line-height:1.3}
-.q .who small{color:var(--muted)}
-.q:nth-child(2){background:var(--ink);color:var(--wool)}
-.q:nth-child(2) .who small{color:var(--saffron-soft)}
-
-/* ======== Visit ======== */
-.visit .grid{display:grid;grid-template-columns:1.1fr 1fr;border-radius:26px;overflow:hidden;background:var(--indigo)}
-.visit .img{position:relative;min-height:620px}
-.visit .img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.visit .img .hours{position:absolute;inset:auto 24px 24px;background:rgba(17,21,42,.8);backdrop-filter:blur(10px);border-radius:16px;padding:20px 24px;display:grid;grid-template-columns:1fr 1fr;gap:6px 20px;font-size:14px}
-.visit .img .hours b{color:var(--saffron);font-weight:500}
-.visit form{padding:56px 50px;display:grid;gap:16px;align-content:center}
-.visit h2{font-family:var(--kufi);font-size:44px;font-weight:600;line-height:1.2}
-.visit form>p{opacity:.75;margin-bottom:10px}
-.field{display:grid;gap:6px}
-.field span{font-size:13px;opacity:.7}
-.field input,.field select{font:inherit;color:var(--wool);background:rgba(244,237,225,.06);border:1px solid rgba(244,237,225,.2);border-radius:12px;padding:13px 16px;outline:none;transition:.3s}
-.field input:focus,.field select:focus{border-color:var(--saffron)}
-.field select option{color:var(--ink)}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.addr{display:flex;gap:10px;align-items:center;font-size:14px;opacity:.8;margin-top:8px}
-.addr svg{width:18px;color:var(--saffron);flex:none}
-
-/* ======== Footer ======== */
-footer{background:var(--ink);padding-top:90px}
-footer .top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:50px;padding-bottom:70px}
-footer .big{display:flex;align-items:center;gap:18px}
-footer .big svg{width:58px;color:var(--saffron)}
-footer .big b{font-family:var(--kufi);font-size:64px;font-weight:600;line-height:1}
-footer .about{opacity:.65;margin-top:20px;max-width:340px;font-size:15px}
-footer h5{font-family:var(--kufi);font-size:18px;font-weight:500;color:var(--saffron);margin-bottom:16px}
-footer ul{list-style:none;display:grid;gap:8px;font-size:15px;opacity:.75}
-footer ul a:hover{color:var(--saffron)}
-.social{display:flex;gap:10px;margin-top:22px}
-.social a{width:42px;height:42px;border-radius:50%;border:1px solid rgba(244,237,225,.2);display:grid;place-items:center;transition:.3s}
-.social a:hover{background:var(--saffron);color:var(--ink)}
-.social svg{width:17px}
-footer .bottom{border-top:1px solid rgba(244,237,225,.1);padding:22px 0;display:flex;justify-content:space-between;font-size:13px;opacity:.55;flex-wrap:wrap;gap:10px}
-
-/* ======== Floating ======== */
-.wa{position:fixed;bottom:26px;left:26px;z-index:60;width:60px;height:60px;border-radius:50%;background:#25D366;color:#fff;display:grid;place-items:center;box-shadow:0 12px 30px -8px rgba(37,211,102,.7)}
-.wa svg{width:30px}
-.wa::before{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid #25D366;animation:ping 2s infinite}
-@keyframes ping{to{transform:scale(1.6);opacity:0}}
-.toast{position:fixed;bottom:30px;right:50%;transform:translate(50%,200%);visibility:hidden;z-index:120;background:var(--saffron);color:var(--ink);padding:14px 26px;border-radius:999px;font-weight:500;transition:.5s cubic-bezier(.3,1.4,.5,1);box-shadow:0 20px 40px -15px #000}
-.toast.on{transform:translate(50%,0);visibility:visible}
-.progress{position:fixed;top:0;right:0;height:3px;background:var(--saffron);z-index:70;width:0}
-
-/* ======== Reveal ======== */
-.rv{opacity:0;transform:translateY(40px);transition:opacity 1s,transform 1s cubic-bezier(.2,.8,.2,1)}
-.rv.in{opacity:1;transform:none}
-.rv-d1{transition-delay:.1s}.rv-d2{transition-delay:.2s}.rv-d3{transition-delay:.3s}
-
-/* ======== Responsive ======== */
-@media (max-width:1024px){
-  .nav ul{display:none}
-  .nav .acts{margin-inline-start:auto}
-  .bento{grid-template-columns:repeat(2,1fr)}
-  .t1{grid-column:span 2}
-  .products{grid-template-columns:repeat(2,1fr)}
-  .story .grid,.sizer .grid,.visit .grid{grid-template-columns:1fr}
-  .story .pics{height:520px}
-  .services,.quotes{grid-template-columns:1fr 1fr}
-  footer .top{grid-template-columns:1fr 1fr}
-  .seal{display:none}
-  .hero-meta .wrap>div:nth-child(2),.hero-meta .wrap>div:nth-child(4){display:none}
+@media (max-width:820px){
+  .side{display:none}
+  .dye{grid-template-columns:1fr;padding:14vh 8vw;align-content:center}
+  .dye .mini{width:40vw}
+  #forge{grid-template-columns:1fr;padding:14vh 8vw}
+  .forge-canvas canvas{height:60vh}
+  .film span{display:none}
+  .thread{display:none}
 }
-@media (max-width:640px){
-  .wrap{width:calc(100% - 32px)}
-  .sec{padding:90px 0}
-  .nav .btn{display:none}
-  .bento{grid-template-columns:1fr;grid-auto-rows:240px}
-  .t1,.t2,.t5{grid-column:auto;grid-row:auto}
-  .products{grid-template-columns:1fr 1fr;gap:20px 12px}
-  .card h3{font-size:18px}
-  .services,.quotes{grid-template-columns:1fr}
-  .stats{grid-template-columns:1fr 1fr;row-gap:30px}
-  .stats div:nth-child(3){border:0}
-  .modal .box{grid-template-columns:1fr;overflow:auto}
-  .modal .box>img{min-height:280px;height:280px}
-  .modal .info{padding:30px 22px;overflow:visible}
-  .visit form{padding:36px 22px}
-  .visit .img{min-height:420px}
-  .two{grid-template-columns:1fr}
-  footer .top{grid-template-columns:1fr}
-  .hero-meta .wrap>div:not(.dots){display:none}
-  .hero-meta .wrap{justify-content:center}
-}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
 </style>
 </head>
 <body>
 
-<!-- ============ Logo symbol ============ -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <mask id="hole"><rect width="100" height="140" fill="#fff"/><path d="M50 61l6 9-6 9-6-9z" fill="#000"/></mask>
-  </defs>
-  <symbol id="logo" viewBox="0 0 100 140">
-    <g fill="none" stroke="currentColor" stroke-linecap="round">
-      <path d="M18 1v9M26 1v9M34 1v9M42 1v9M50 1v9M58 1v9M66 1v9M74 1v9M82 1v9M18 130v9M26 130v9M34 130v9M42 130v9M50 130v9M58 130v9M66 130v9M74 130v9M82 130v9" stroke-width="2.2"/>
-      <rect x="10" y="12" width="80" height="116" rx="3" stroke-width="3.2"/>
-      <rect x="18" y="20" width="64" height="100" stroke-width="1.4"/>
-      <path d="M50 30l26 40-26 40-26-40z" stroke-width="2"/>
-      <path d="M50 30v-4M50 110v4M24 70h-4M76 70h4" stroke-width="2"/>
-    </g>
-    <g fill="currentColor">
-      <path d="M50 44l17 26-17 26-17-26z" mask="url(#hole)"/>
-      <path d="M18 20h13L18 33zM82 20H69l13 13zM18 120h13l-13-13zM82 120H69l13-13z"/>
-    </g>
-  </symbol>
+  <defs><mask id="hole"><rect width="100" height="140" fill="#fff"/><path d="M50 61l6 9-6 9-6-9z" fill="#000"/></mask></defs>
+  <symbol id="logo" viewBox="0 0 100 140"><g fill="none" stroke="currentColor" stroke-linecap="round"><path d="M18 1v9M26 1v9M34 1v9M42 1v9M50 1v9M58 1v9M66 1v9M74 1v9M82 1v9M18 130v9M26 130v9M34 130v9M42 130v9M50 130v9M58 130v9M66 130v9M74 130v9M82 130v9" stroke-width="2.2"/><rect x="10" y="12" width="80" height="116" rx="3" stroke-width="3.2"/><rect x="18" y="20" width="64" height="100" stroke-width="1.4"/><path d="M50 30l26 40-26 40-26-40z" stroke-width="2"/><path d="M50 30v-4M50 110v4M24 70h-4M76 70h4" stroke-width="2"/></g><g fill="currentColor"><path d="M50 44l17 26-17 26-17-26z" mask="url(#hole)"/><path d="M18 20h13L18 33zM82 20H69l13 13zM18 120h13l-13-13zM82 120H69l13-13z"/></g></symbol>
 </svg>
 
-<div id="loader">
+<div class="grain"></div><div class="vignette"></div>
+<div class="cursor" id="cursor"></div>
+<div class="countdown" id="countdown"></div>
+<a class="hud-brand" href="showroom.html"><svg viewBox="0 0 100 140"><use href="#logo"/></svg><b>نَوْل</b></a>
+<div class="hud-chap"><span class="n" id="chapN">٠١</span><span class="t"><span id="chapT">الخيط</span></span></div>
+<div class="thread"><i id="threadFill"></i></div>
+<button class="film" id="filmBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3"/></svg><span>وضع التصوير</span></button>
+
+<!-- 01 الخيط -->
+<section class="chap" id="intro" data-chap="الخيط">
+  <div class="warps" id="warps"></div>
+  <svg class="thr" id="thrSvg" preserveAspectRatio="none"><path id="thrPath" fill="none" stroke="#D9A441" stroke-width="2.2" style="filter:drop-shadow(0 0 6px #D9A441)"/></svg>
+  <div class="intro-top"><span class="cap-sm">NAWL — A STORY IN ONE MILLION KNOTS</span></div>
+  <div class="lines">
+    <h1 class="l1"><span class="w">قبل </span><span class="w">أن </span><span class="w">تصير </span><span class="w">سجادة…</span></h1>
+    <h1 class="l2"><span class="w">كانت </span><span class="w"><em>خيطاً </em></span><span class="w"><em>واحداً.</em></span></h1>
+  </div>
+  <div class="hint"><span>مرّر لتبدأ الحكاية</span><i></i></div>
+</section>
+
+<!-- 02 النول -->
+<section class="chap" id="loom" data-chap="النول">
+  <div class="stage">
+    <div class="rugwrap" id="rugwrap">
+      <div class="beam top"></div>
+      <div class="fringe t" id="fringeT"></div>
+      <canvas id="loomCanvas"></canvas>
+      <div class="fringe b"></div>
+      <div class="beam bot"></div>
+    </div>
+  </div>
+  <div class="side r">
+    <div class="row"><div class="counter" id="knots">٠</div><small>عقدة رُبطت باليد</small></div>
+    <div class="row"><div class="counter" id="days">٠</div><small>يوماً على النول</small></div>
+  </div>
+  <div class="side l">
+    <div class="row"><div class="counter" id="rowsC">٠</div><small>صفّاً من أصل ٩١</small></div>
+    <div class="row"><div class="counter" id="pct">٠٪</div><small>اكتمال السجادة</small></div>
+  </div>
+  <div class="caption" id="caps">
+    <span>يبدأ النسج من الأسفل… صفّاً بعد صف</span>
+    <span>كلُّ نقطةٍ تراها… عقدةٌ ربطتها يد</span>
+    <span>وفي المنتصف… يولد القلب</span>
+    <span>ثم تكتمل الحاشية… كإطارٍ لحكاية</span>
+  </div>
+  <div class="done-title" id="doneT">اكتملت.<em>أربعة عشر شهراً… في ثوانٍ</em></div>
+</section>
+
+<!-- 03 الألوان -->
+<section class="chap" id="dyes" data-chap="الألوان">
+  <div class="pre"><h2>الألوان لا تُصنع…<br><em>تُستخرج من الأرض</em></h2></div>
+  <div class="dye d1"><div><span class="cap-sm" style="color:#F4EDE1">RUBIA TINCTORUM</span><div class="word">الفُوّة</div><p>جذورٌ تُجفَّف وتُطحن وتُغلى ثلاثة أيام، فتمنح الأحمر الذي لا يبهت مئة عام.</p><div class="hex">#8E1F1F</div></div><div class="mini" data-pal="0"></div><div class="dust"></div></div>
+  <div class="dye d2"><div><span class="cap-sm" style="color:#F4EDE1">INDIGOFERA</span><div class="word">النيلة</div><p>أوراقٌ تُخمَّر في الظلام، ثم يلامس الصوفُ الهواءَ… فيولد الأزرق أمام عينيك.</p><div class="hex">#1C2340</div></div><div class="mini" data-pal="1"></div><div class="dust"></div></div>
+  <div class="dye d3"><div><span class="cap-sm" style="color:#1A1412">CROCUS SATIVUS</span><div class="word">الزعفران</div><p>مع قشر الرمّان وأوراق الكرم… ذهبٌ دافئ يتوهج كلما لامسته الشمس.</p><div class="hex">#D9A441</div></div><div class="mini" data-pal="2"></div><div class="dust"></div></div>
+</section>
+
+<!-- 04 العقدة -->
+<section class="chap" id="macro" data-chap="العقدة">
+  <img id="macroImg" src="https://images.unsplash.com/photo-1652634213812-f0deeb1de78e?auto=format&fit=crop&w=2400&q=85" alt="">
+  <div class="shade"></div>
+  <div class="lens" id="lens"></div>
+  <div class="t"><span id="m1">انظر <em>عن قرب…</em></span><span id="m2" style="opacity:0">هنا تسكن<br><em>٩٠٠ عقدة</em> في كل إنش</span></div>
+</section>
+
+<!-- 05 السوق -->
+<section class="chap" id="bazaar" data-chap="السوق">
+  <div class="rope"></div>
+  <div class="track" id="track">
+    <div class="intro-card"><span class="cap-sm">THE NAWL BAZAAR</span><h2>سوقُ<br><em>نَوْل</em></h2><p>اثنتا عشرة مدينة، وآلاف الحكايات المعلّقة… مرّر واختر حكايتك.</p></div>
+  </div>
+</section>
+
+<!-- 06 الرحلة -->
+<section class="chap" id="flight" data-chap="الرحلة">
+  <div class="stars" id="stars"></div>
+  <div class="moon"></div>
+  <svg class="dunes" id="dune1" viewBox="0 0 1440 320" preserveAspectRatio="none" style="height:42vh;opacity:.55"><path fill="#4a1d22" d="M0 200C180 120 300 110 480 170S800 260 980 170 1300 90 1440 150V320H0z"/></svg>
+  <svg class="dunes" id="dune2" viewBox="0 0 1440 320" preserveAspectRatio="none" style="height:32vh"><path fill="#2a1016" d="M0 230C240 150 420 160 620 220S960 280 1160 210 1380 170 1440 190V320H0z"/></svg>
+  <div class="sparks" id="sparks"></div>
+  <div class="carpet" id="carpet"><div class="shadowc"></div><div class="body" id="carpetBody"></div></div>
+  <svg class="dunes" id="dune3" viewBox="0 0 1440 320" preserveAspectRatio="none" style="height:20vh;z-index:5"><path fill="#140809" d="M0 260C300 200 520 220 760 250S1180 300 1440 240V320H0z"/></svg>
+  <div class="t"><span id="f1">من <em>النَّول…</em></span><span id="f2">…إلى <em>بيتك</em></span></div>
+</section>
+
+<!-- 07 التفرّد -->
+<section class="chap" id="forge" data-chap="التفرّد">
   <div>
-    <svg class="mark" viewBox="0 0 100 140" aria-hidden="true">
+    <span class="cap-sm">NO TWO ALIKE</span>
+    <h2 class="reveal-up">لا توجد سجادتان<br><em>متشابهتان.</em></h2>
+    <p class="reveal-up">ولا حتى هنا. اضغط، وسيُنسج أمامك تصميمٌ لم يره أحدٌ من قبل… ولن يتكرر.</p>
+    <div class="serial" id="serial">نَوْل № ٤٨٢١</div>
+    <div class="specs" id="specs"></div>
+    <div class="chips" id="chips"></div>
+    <button class="weave-btn" id="weaveBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5z"/></svg>انسج سجادة جديدة</button>
+  </div>
+  <div class="forge-canvas"><canvas id="forgeCanvas"></canvas></div>
+</section>
+
+<!-- 08 نَوْل -->
+<section class="chap" id="outro" data-chap="نَوْل">
+  <div>
+    <svg class="big" viewBox="0 0 100 140" aria-hidden="true">
       <g fill="none" stroke="currentColor" stroke-linecap="round">
         <path class="draw" d="M18 1v9M26 1v9M34 1v9M42 1v9M50 1v9M58 1v9M66 1v9M74 1v9M82 1v9M18 130v9M26 130v9M34 130v9M42 130v9M50 130v9M58 130v9M66 130v9M74 130v9M82 130v9" stroke-width="2.2"/>
         <rect class="draw" x="10" y="12" width="80" height="116" rx="3" stroke-width="3.2"/>
         <rect class="draw" x="18" y="20" width="64" height="100" stroke-width="1.4"/>
         <path class="draw" d="M50 30l26 40-26 40-26-40z" stroke-width="2"/>
       </g>
-      <g class="fill" fill="currentColor"><path d="M50 44l17 26-17 26-17-26z" mask="url(#hole)"/><path d="M18 20h13L18 33zM82 20H69l13 13zM18 120h13l-13-13zM82 120H69l13-13z"/></g>
+      <g class="fillm" fill="currentColor"><path d="M50 44l17 26-17 26-17-26z" mask="url(#hole)"/><path d="M18 20h13L18 33zM82 20H69l13 13zM18 120h13l-13-13zM82 120H69l13-13z"/></g>
     </svg>
-    <div class="name">نَوْل</div>
-  </div>
-</div>
-<div class="progress" id="progress"></div>
-
-<!-- ============ Nav ============ -->
-<header class="nav" id="nav">
-  <div class="wrap">
-    <a href="#top" class="brand" aria-label="نول">
-      <svg viewBox="0 0 100 140"><use href="#logo"/></svg>
-      <span><b>نَوْل</b><small>NAWL RUGS</small></span>
-    </a>
-    <ul>
-      <li><a href="#collections">المجموعات</a></li>
-      <li><a href="#story">الحكاية</a></li>
-      <li><a href="#shop">القطع المختارة</a></li>
-      <li><a href="#sizer">دليل المقاس</a></li>
-      <li><a href="#services">الخدمات</a></li>
-      <li><a href="#visit">المعرض</a></li>
-    </ul>
-    <div class="acts">
-      <button class="wish" aria-label="المفضلة"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.9 4.5c2.2 0 3.6 1.2 5.1 3 1.5-1.8 2.9-3 5.1-3 3.9 0 6 3.9 4.5 7.3C19.5 16.4 12 21 12 21z"/></svg><i id="wishCount">0</i></button>
-      <a href="#visit" class="btn btn-gold">احجز زيارة خاصة</a>
-    </div>
-  </div>
-</header>
-
-<!-- ============ Hero ============ -->
-<section class="hero" id="top">
-  <div class="slide on"><img src="https://images.unsplash.com/photo-1616395442106-1b927fee41cd?auto=format&fit=crop&w=2000&q=80" alt="أكوام من السجاد الفارسي الأحمر"></div>
-  <div class="slide"><img src="https://images.unsplash.com/photo-1600166898232-2c9018300e0a?auto=format&fit=crop&w=2000&q=80" alt="سجادة فارسية حمراء مطوية"></div>
-  <div class="slide"><img src="https://images.unsplash.com/photo-1695120801533-1cdf1d7d2d6a?auto=format&fit=crop&w=2000&q=80" alt="معرض سجاد بألوان متعددة"></div>
-
-  <div class="seal" aria-hidden="true">
-    <svg viewBox="0 0 150 150"><defs><path id="circ" d="M75 75m-62 0a62 62 0 1 1 124 0a62 62 0 1 1-124 0"/></defs><text font-family="Reem Kufi" font-size="14" fill="#E9C987" letter-spacing="3"><textPath href="#circ">منسوج باليد ◆ شهادة أصالة ◆ منذ ١٩٩٩ ◆ </textPath></text></svg>
-    <div class="core"><svg viewBox="0 0 100 140"><use href="#logo"/></svg></div>
-  </div>
-
-  <div class="wrap content">
-    <span class="eyebrow fade">معرض نَوْل للسجاد اليدوي الفاخر</span>
-    <h1><span class="ln"><span>كلُّ عُقدةٍ</span></span><span class="ln"><span>تحكي <em>حكاية</em></span></span></h1>
-    <p class="lead fade">سجادٌ فارسي وتركي وكليمٌ أصيل، نسجته أيادٍ توارثت الصنعة جيلاً بعد جيل. نختاره قطعةً قطعة… لتجد في بيتك ما يستحقّ أن يُورَّث.</p>
-    <div class="ctas fade">
-      <a href="#shop" class="btn btn-gold">استكشف المجموعة <span>←</span></a>
-      <a href="#visit" class="btn btn-ghost">احجز معاينة في المعرض</a>
-    </div>
-  </div>
-
-  <div class="hero-meta">
-    <div class="wrap">
-      <div><b>+3,200</b>قطعة أصلية في المعرض</div>
-      <div><b>18</b>بلد منشأ</div>
-      <div class="dots" id="dots"><button class="on" aria-label="1"></button><button aria-label="2"></button><button aria-label="3"></button></div>
-      <div><b>✓</b>شهادة أصالة لكل سجادة</div>
-    </div>
+    <h2 class="reveal-up">نَوْل</h2>
+    <div class="tag reveal-up">كلُّ عُقدةٍ تحكي حكاية</div>
+    <div class="ctas reveal-up"><a class="g" href="showroom.html">ادخل المعرض</a><a href="#">احجز زيارتك</a><a href="#">واتساب</a></div>
+    <div class="addr reveal-up">الرياض — طريق التحلية · يومياً حتى ١١ مساءً</div>
   </div>
 </section>
 
-<div class="marquee" aria-hidden="true"><div class="track" id="mq">
-  <span>تبريز</span><span>كاشان</span><span>أصفهان</span><span>قُم الحريري</span><span>كليم الأناضول</span><span>هيريكي</span><span>شيراز</span><span>سجاد عصري</span><span>توصيل وتركيب مجاني</span><span>تقسيط بلا فوائد</span>
-</div></div>
-
-<!-- ============ Collections ============ -->
-<section class="sec" id="collections">
-  <div class="wrap">
-    <div class="head rv">
-      <div><span class="eyebrow">مجموعاتنا</span><h2>عوالمُ <em>منسوجة</em><br>من الشرق إلى بيتك</h2></div>
-      <p>من صرامة الهندسة القَبَلية إلى نعومة الحرير الأصفهاني؛ ستّ مجموعات تجمع أكثر من ثلاثة آلاف قطعة، لكلٍّ منها روحها ومدينتها وحكايتها.</p>
-    </div>
-    <div class="bento">
-      <a href="#shop" data-go="فارسي" class="tile t1 rv"><img loading="lazy" src="https://images.unsplash.com/photo-1652634213812-f0deeb1de78e?auto=format&fit=crop&w=1200&q=80" alt=""><span class="count">٨٤٠ قطعة</span><span class="go">←</span><div class="t"><small>Persian Handmade</small><h3>الفارسي اليدوي</h3></div></a>
-      <a href="#shop" data-go="حرير" class="tile t2 rv rv-d1"><img loading="lazy" src="https://images.unsplash.com/photo-1531162805941-58330188d75c?auto=format&fit=crop&w=1200&q=80" alt=""><span class="count">١٢٠ قطعة</span><span class="go">←</span><div class="t"><small>Pure Silk</small><h3>الحرير الخالص</h3></div></a>
-      <a href="#shop" data-go="كليم" class="tile rv rv-d2"><img loading="lazy" src="https://images.unsplash.com/photo-1717744258123-c3aceddf74d1?auto=format&fit=crop&w=800&q=80" alt=""><span class="count">٣١٠ قطعة</span><span class="go">←</span><div class="t"><small>Kilim</small><h3>الكليم</h3></div></a>
-      <a href="#shop" data-go="تركي" class="tile rv rv-d3"><img loading="lazy" src="https://images.unsplash.com/photo-1594847915592-2a7ef568e2b6?auto=format&fit=crop&w=800&q=80" alt=""><span class="count">٤٦٠ قطعة</span><span class="go">←</span><div class="t"><small>Turkish</small><h3>التركي</h3></div></a>
-      <a href="#shop" data-go="عصري" class="tile t5 rv"><img loading="lazy" src="https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1200&q=80" alt=""><span class="count">٩٥٠ قطعة</span><span class="go">←</span><div class="t"><small>Modern Living</small><h3>العصري</h3></div></a>
-      <a href="#shop" data-go="عتيق" class="tile t5 rv rv-d1"><img loading="lazy" src="https://images.unsplash.com/photo-1572123979839-3749e9973aba?auto=format&fit=crop&w=1200&q=80" alt=""><span class="count">٨٥ قطعة</span><span class="go">←</span><div class="t"><small>Antique &amp; Vintage</small><h3>العتيق والنادر</h3></div></a>
-    </div>
-  </div>
-</section>
-
-<div class="strip"></div>
-
-<!-- ============ Story ============ -->
-<section class="sec story" id="story">
-  <div class="wrap">
-    <div class="grid">
-      <div class="pics rv">
-        <img class="p1" loading="lazy" src="https://images.unsplash.com/photo-1617694820985-a5476fe22722?auto=format&fit=crop&w=1100&q=80" alt="حِرَفية تنسج سجادة على النول">
-        <img class="p2" loading="lazy" src="https://images.unsplash.com/photo-1606681246653-74521ac452f4?auto=format&fit=crop&w=700&q=80" alt="أيدٍ تعقد خيوط السجادة">
-        <div class="badge"><b>١٤</b>شهراً لنسج<br>سجادة واحدة</div>
-      </div>
-      <div>
-        <div class="head rv" style="margin-bottom:0"><div><span class="eyebrow" style="color:var(--saffron-soft)">الحكاية</span><h2>من النَّول…<br>إلى <em>صالتك</em></h2></div></div>
-        <p class="rv" style="opacity:.8;margin-top:18px;max-width:520px">لا نبيع سجاداً، بل نختار إرثاً. نسافر إلى ورش النسج في تبريز وكاشان والأناضول، ونقف عند كل نول لنتأكد أن ما يصلك قد صُنع كما يجب: بصبرٍ، وبمواد طبيعية، وبأيدٍ تعرف قيمة العقدة.</p>
-        <div class="steps">
-          <div class="step rv"><span class="n">٠١</span><div><h4>الصوف والحرير</h4><p>صوفٌ من خراف المرتفعات، وحريرٌ طبيعي يُغزل يدوياً قبل أن يلامس النول.</p></div></div>
-          <div class="step rv rv-d1"><span class="n">٠٢</span><div><h4>الصباغة الطبيعية</h4><p>الفُوّة للأحمر، والنيلة للأزرق، والزعفران وقشر الرمان للذهبي… ألوانٌ تشيخ بجمال.</p></div></div>
-          <div class="step rv rv-d2"><span class="n">٠٣</span><div><h4>العقد اليدوي</h4><p>حتى مليون عقدة في المتر المربع الواحد، تُعقد واحدةً تلو الأخرى على مدى شهور.</p></div></div>
-          <div class="step rv rv-d3"><span class="n">٠٤</span><div><h4>الغسيل والتشطيب</h4><p>غسيلٌ بماء الينابيع، وتجفيفٌ تحت الشمس، وقصٌّ يدوي يكشف عن عمق النقش.</p></div></div>
-        </div>
-      </div>
-    </div>
-    <div class="stats">
-      <div class="rv"><b data-count="25">0</b><span>عاماً من الخبرة</span></div>
-      <div class="rv rv-d1"><b data-count="3200" data-plus>0</b><span>قطعة أصلية</span></div>
-      <div class="rv rv-d2"><b data-count="18">0</b><span>بلد منشأ</span></div>
-      <div class="rv rv-d3"><b data-count="40000" data-plus>0</b><span>بيت فرشناه</span></div>
-    </div>
-  </div>
-</section>
-
-<div class="strip"></div>
-
-<!-- ============ Products ============ -->
-<section class="sec light" id="shop">
-  <div class="wrap">
-    <div class="head rv">
-      <div><span class="eyebrow">القطع المختارة</span><h2>قطعٌ <em>لا تتكرر</em></h2></div>
-      <div class="filters" id="filters">
-        <button class="on" data-f="الكل">الكل</button><button data-f="فارسي">فارسي</button><button data-f="حرير">حرير</button><button data-f="تركي">تركي</button><button data-f="كليم">كليم</button><button data-f="عصري">عصري</button><button data-f="عتيق">عتيق</button>
-      </div>
-    </div>
-    <div class="products" id="products"></div>
-  </div>
-</section>
-
-<!-- ============ Size guide ============ -->
-<section class="sec sizer" id="sizer">
-  <div class="wrap grid">
-    <div>
-      <div class="head rv" style="margin-bottom:0"><div><span class="eyebrow">دليل المقاس الذكي</span><h2>أيُّ مقاسٍ<br>يناسب <em>غرفتك؟</em></h2></div></div>
-      <p class="rv" style="opacity:.75;margin-top:16px;max-width:460px">حرّك المؤشرات بمقاسات غرفتك، وسنقترح عليك المقاس المثالي الذي يترك إطاراً متناسقاً من الأرضية حول السجادة.</p>
-      <div class="ctrl rv">
-        <div><label>طول الغرفة <b><span id="lv">5.5</span> م</b></label><input type="range" id="L" min="3" max="9" step="0.5" value="5.5"></div>
-        <div><label>عرض الغرفة <b><span id="wv">4.5</span> م</b></label><input type="range" id="W" min="2.5" max="7" step="0.5" value="4.5"></div>
-        <div><label>نوع الغرفة</label><div class="seg" id="room"><button class="on" data-m="0.6">صالة الجلوس</button><button data-m="0.9">المجلس</button><button data-m="0.5">غرفة النوم</button><button data-m="0.45">الطعام</button></div></div>
-      </div>
-      <div class="result rv"><div><small>المقاس المقترح</small><b id="rec">250 × 350</b><small id="recNote">سم — المقاس الأكثر طلباً للصالات</small></div><a href="#shop" class="btn btn-gold">تسوّق هذا المقاس</a></div>
-    </div>
-    <div class="plan rv rv-d1">
-      <svg viewBox="0 0 600 460" id="planSvg">
-        <defs>
-          <pattern id="rugPat" patternUnits="objectBoundingBox" width="1" height="1"><image id="rugImg" href="https://images.unsplash.com/photo-1652634213812-f0deeb1de78e?auto=format&fit=crop&w=900&q=70" width="400" height="300" preserveAspectRatio="xMidYMid slice"/></pattern>
-          <pattern id="floor" width="40" height="40" patternUnits="userSpaceOnUse"><rect width="40" height="40" fill="#EADFCC"/><path d="M0 40h40M40 0v40" stroke="#dccfb8" stroke-width="1"/></pattern>
-        </defs>
-        <rect id="roomR" x="30" y="30" width="540" height="400" fill="url(#floor)" stroke="#1A1412" stroke-width="6"/>
-        <rect class="rug" id="rugR" x="100" y="80" width="400" height="300" rx="2" fill="url(#rugPat)" stroke="#D9A441" stroke-width="3"/>
-        <g id="furn" fill="#1C2340" opacity=".85"></g>
-        <text id="dimL" x="300" y="22" text-anchor="middle" font-size="14" fill="#7A6A5E" font-family="IBM Plex Sans Arabic"></text>
-      </svg>
-      <div class="cap"><span>مخطط توضيحي من الأعلى</span><span>■ السجادة المقترحة</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ Services ============ -->
-<section class="sec light" id="services">
-  <div class="wrap">
-    <div class="head rv">
-      <div><span class="eyebrow">خدماتنا</span><h2>رفقةٌ تدوم<br><em>بعد الشراء</em></h2></div>
-      <p>السجادة الأصيلة تعيش أكثر من صاحبها، ونحن هنا لنعتني بها معك طوال عمرها.</p>
-    </div>
-    <div class="services rv">
-      <div class="svc"><span class="num">01</span><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg></div><h4>توصيل وتركيب مجاني</h4><p>نوصل سجادتك ونفرشها في مكانها مع لبّادة مانعة للانزلاق، داخل المدينة خلال ٤٨ ساعة.</p></div>
-      <div class="svc"><span class="num">02</span><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3s6 6.5 6 11a6 6 0 01-12 0c0-4.5 6-11 6-11z"/><path d="M9 15a3 3 0 003 3"/></svg></div><h4>غسيل يدوي وتعقيم</h4><p>غسيل تقليدي بالماء والصابون الطبيعي، دون كيماويات قاسية تؤذي الصوف أو الألوان.</p></div>
-      <div class="svc"><span class="num">03</span><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20l7-7M14 4l6 6-8 8-6-6z"/><path d="M15 9l-1-1"/></svg></div><h4>ترميم وإصلاح</h4><p>حرفيّون متخصصون يعيدون نسج الأطراف والحواف والثقوب بنفس الخيوط والألوان.</p></div>
-      <div class="svc"><span class="num">04</span><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg></div><h4>تقييم السجاد العتيق</h4><p>نقيّم سجادتك القديمة ونصدر لها تقريراً بالمنشأ والعمر والقيمة السوقية.</p></div>
-      <div class="svc"><span class="num">05</span><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h4"/></svg></div><h4>تقسيط بلا فوائد</h4><p>قسّط قيمة سجادتك حتى ١٢ شهراً بلا فوائد ولا رسوم خفية.</p></div>
-      <div class="svc"><span class="num">06</span><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12l3-7h12l3 7M3 12v7h18v-7M3 12h18"/><path d="M10 16h4"/></svg></div><h4>جرّبها في بيتك</h4><p>اختر حتى ثلاث سجادات، نحضرها لبيتك لتجربها على أرضك وتحت إضاءتك قبل القرار.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ Lookbook ============ -->
-<section class="sec look" id="look">
-  <div class="wrap">
-    <div class="head rv">
-      <div><span class="eyebrow">من بيوتكم</span><h2>سجّادنا… <em>في بيوتكم</em></h2></div>
-      <div class="rail-nav"><button id="next" aria-label="التالي">→</button><button id="prev" aria-label="السابق">←</button></div>
-    </div>
-  </div>
-  <div class="rail" id="rail">
-    <figure class="shot rv"><img loading="lazy" src="https://images.unsplash.com/photo-1615529182904-14819c35db37?auto=format&fit=crop&w=900&q=80" alt=""><figcaption><b>فيلا الياسمين</b><span>كاشان ٣٠٠×٤٠٠</span></figcaption></figure>
-    <figure class="shot rv rv-d1"><img loading="lazy" src="https://images.unsplash.com/photo-1593682865887-83d100189fa1?auto=format&fit=crop&w=900&q=80" alt=""><figcaption><b>شقة الكورنيش</b><span>شيراز ٢٠٠×٣٠٠</span></figcaption></figure>
-    <figure class="shot rv rv-d2"><img loading="lazy" src="https://images.unsplash.com/photo-1616047006789-b7af5afb8c20?auto=format&fit=crop&w=900&q=80" alt=""><figcaption><b>استوديو الريم</b><span>نسيم ١٦٠×٢٣٠</span></figcaption></figure>
-    <figure class="shot rv rv-d3"><img loading="lazy" src="https://images.unsplash.com/photo-1617103996702-96ff29b1c467?auto=format&fit=crop&w=900&q=80" alt=""><figcaption><b>مجلس آل سالم</b><span>كليم ٢٥٠×٣٥٠</span></figcaption></figure>
-    <figure class="shot rv"><img loading="lazy" src="https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=900&q=80" alt=""><figcaption><b>بيت النخيل</b><span>خطوط الرمل ٢٠٠×٢٩٠</span></figcaption></figure>
-    <figure class="shot rv"><img loading="lazy" src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=900&q=80" alt=""><figcaption><b>دارة الهدى</b><span>هيريكي ٢٥٠×٣٥٠</span></figcaption></figure>
-  </div>
-</section>
-
-<!-- ============ Testimonials ============ -->
-<section class="sec light" style="padding-top:110px">
-  <div class="wrap">
-    <div class="head rv"><div><span class="eyebrow">آراء عملائنا</span><h2>قالوا عن <em>نَوْل</em></h2></div><p>أكثر من ٤٠ ألف بيت، وتقييم ٤٫٩ من ٥ على خرائط جوجل.</p></div>
-    <div class="quotes">
-      <div class="q rv"><span class="stars">★★★★★</span><p>«زرنا المعرض نبحث عن سجادة للمجلس، فقضينا ساعتين بين القطع مع قهوة وتمر. الأستاذ شرح لنا الفرق بين كل نوع بصبر، واخترنا كاشان صار قلب البيت.»</p><div class="who"><span class="av">م</span><div><b>محمد العتيبي</b><small>كاشان ٣٠٠×٤٠٠</small></div></div></div>
-      <div class="q rv rv-d1"><span class="stars">★★★★★</span><p>«خدمة "جرّبها في بيتك" غيّرت كل شيء. جابوا لي ثلاث سجادات، وجربتها مع الكنب والإضاءة. اخترت الحرير الأصفهاني وما ندمت لحظة.»</p><div class="who"><span class="av">س</span><div><b>سارة القحطاني</b><small>أصفهان الحريري</small></div></div></div>
-      <div class="q rv rv-d2"><span class="stars">★★★★★</span><p>«سجادة جدتي كانت متضررة بشدة، ورجعت لي كأنها جديدة. الترميم دقيق لدرجة ما قدرت أحدد مكان الإصلاح. شغل حرفي حقيقي.»</p><div class="who"><span class="av">ع</span><div><b>عبدالله الشهري</b><small>خدمة الترميم</small></div></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ Visit ============ -->
-<section class="sec light visit" id="visit" style="padding-top:0">
-  <div class="wrap">
-    <div class="grid rv" style="color:var(--wool)">
-      <div class="img">
-        <img loading="lazy" src="https://images.unsplash.com/photo-1695632953654-78815eee7296?auto=format&fit=crop&w=1200&q=80" alt="داخل معرض نول للسجاد">
-        <div class="hours"><span>السبت – الخميس</span><b>١٠ص – ١١م</b><span>الجمعة</span><b>٤م – ١١م</b></div>
-      </div>
-      <form id="book">
-        <span class="eyebrow">زيارة خاصة</span>
-        <h2>تعال، وافرشها<br>أمام عينيك</h2>
-        <p>قهوةٌ عربية، وإضاءةٌ نهارية، ومساحةٌ نفرد فيها السجادة أمامك كما ستكون في بيتك. احجز موعدك ويكون أحد خبرائنا بانتظارك.</p>
-        <div class="two">
-          <label class="field"><span>الاسم</span><input required placeholder="اسمك الكريم"></label>
-          <label class="field"><span>رقم الجوال</span><input required type="tel" placeholder="05xxxxxxxx" dir="ltr" style="text-align:right"></label>
-        </div>
-        <div class="two">
-          <label class="field"><span>التاريخ</span><input required type="date"></label>
-          <label class="field"><span>تهتم بـ</span><select><option>السجاد الفارسي</option><option>الحرير</option><option>الكليم</option><option>السجاد العصري</option><option>ترميم أو غسيل</option></select></label>
-        </div>
-        <button class="btn btn-gold" style="justify-content:center;margin-top:8px">تأكيد الحجز</button>
-        <div class="addr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-12a7 7 0 10-14 0c0 5.7 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>طريق الأمير محمد بن عبدالعزيز (التحلية)، الرياض</div>
-      </form>
-    </div>
-  </div>
-</section>
-
-<!-- ============ Footer ============ -->
-<footer>
-  <div class="strip" style="margin-top:-90px;margin-bottom:90px"></div>
-  <div class="wrap">
-    <div class="top">
-      <div>
-        <div class="big"><svg viewBox="0 0 100 140"><use href="#logo"/></svg><b>نَوْل</b></div>
-        <p class="about">معرض متخصص في السجاد اليدوي الأصيل منذ ١٩٩٩. نختار كل قطعة بأنفسنا من ورش النسج، ونرافقها حتى تستقر في بيتك.</p>
-        <div class="social">
-          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg></a>
-          <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 3c.4 2.3 1.8 3.8 4 4v3.2c-1.5 0-2.9-.4-4-1.2v6.3A6.3 6.3 0 1110.2 9v3.3a3 3 0 102.2 2.9V3h4.1z"/></svg></a>
-          <a href="#" aria-label="Snapchat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3c3 0 5 2.2 5 5v2.5l1.8-.5c.6 0 .8.8.2 1.1l-2 .9c.6 1.8 2 3.1 3.7 3.6-.3.9-1.6 1-2.7 1.2l-.4 1.3c-1.2-.2-2.3 0-3.4.8-1.3.9-3.1.9-4.4 0-1.1-.8-2.2-1-3.4-.8l-.4-1.3c-1.1-.2-2.4-.3-2.7-1.2 1.7-.5 3.1-1.8 3.7-3.6l-2-.9c-.6-.3-.4-1.1.2-1.1l1.8.5V8c0-2.8 2-5 5-5z"/></svg></a>
-          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.8 3h3.1l-6.8 7.8L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.3-8.3L2 3h6.4l4.4 5.8L17.8 3zm-1.1 16.2h1.7L7.4 4.7H5.6l11.1 14.5z"/></svg></a>
-        </div>
-      </div>
-      <div><h5>المجموعات</h5><ul><li><a href="#shop">الفارسي اليدوي</a></li><li><a href="#shop">الحرير الخالص</a></li><li><a href="#shop">الكليم</a></li><li><a href="#shop">التركي</a></li><li><a href="#shop">العصري</a></li><li><a href="#shop">العتيق والنادر</a></li></ul></div>
-      <div><h5>الخدمات</h5><ul><li><a href="#services">التوصيل والتركيب</a></li><li><a href="#services">الغسيل والتعقيم</a></li><li><a href="#services">الترميم</a></li><li><a href="#services">تقييم العتيق</a></li><li><a href="#sizer">دليل المقاس</a></li></ul></div>
-      <div><h5>تواصل معنا</h5><ul><li dir="ltr" style="text-align:right">+966 50 000 0000</li><li>hello@nawl.sa</li><li>الرياض — طريق التحلية</li><li>يومياً حتى ١١ مساءً</li></ul></div>
-    </div>
-    <div class="bottom"><span>© ٢٠٢٦ نَوْل للسجاد. جميع الحقوق محفوظة.</span><span>كل عقدة تحكي حكاية</span></div>
-  </div>
-</footer>
-
-<!-- Quick view -->
-<div class="modal" id="modal">
-  <div class="box">
-    <img id="mImg" alt="">
-    <div class="info">
-      <button class="x" id="mClose" aria-label="إغلاق">×</button>
-      <span class="eyebrow" id="mOrigin"></span>
-      <h3 id="mName"></h3>
-      <p class="desc" id="mDesc"></p>
-      <div class="specs" id="mSpecs"></div>
-      <div class="pr"><b id="mPrice"></b><span>أو ١٢ دفعة بلا فوائد</span></div>
-      <div class="row"><a href="#visit" class="btn btn-red" id="mBook">احجز معاينة</a><a href="#" class="btn btn-ghost" style="border-color:rgba(26,20,18,.25)">اطلب عبر واتساب</a></div>
-      <div class="cert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>تصلك مع شهادة أصالة موثّقة وضمان مدى الحياة على النسيج.</div>
-    </div>
-  </div>
-</div>
-
-<a href="#" class="wa" aria-label="واتساب"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.6 15.1L2 22l5-1.3A10 10 0 1012 2zm0 18.2a8.2 8.2 0 01-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1112 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 01-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 00-.7.3 3 3 0 00-.9 2.2 5.2 5.2 0 001.1 2.7 11.8 11.8 0 004.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg></a>
-<div class="toast" id="toast"></div>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
+gsap.registerPlugin(ScrollTrigger);
+const AR=new Intl.NumberFormat('ar-EG');
+const ar=n=>AR.format(Math.round(n));
 const U=(id,w=900)=>`https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=80`;
-const CUR='ر.س';
-const fmt=n=>n.toLocaleString('en-US')+' '+CUR;
 
-const RUGS=[
- {n:'تبريز الملكي',c:'فارسي',o:'تبريز، إيران',img:'1652634213812-f0deeb1de78e',s:'250 × 350',m:'صوف وحرير',k:'640,000',a:'٣ سنوات',p:18500,old:22000,t:'الأكثر طلباً',g:1,d:'ميدالية مركزية مهيبة تحيط بها أغصان الكروم وزهور اللوتس، بأحمر الفُوّة العميق وحواف من الزعفران. قطعة تليق بقلب مجلس فاخر.'},
- {n:'أصفهان الحريري',c:'حرير',o:'أصفهان، إيران',img:'1531162805941-58330188d75c',s:'150 × 225',m:'حرير خالص',k:'1,000,000',a:'جديدة',p:26000,t:'قطعة نادرة',g:1,d:'حريرٌ خالص يتغيّر لونه مع زاوية النظر، بنقوش زهرية زرقاء وخضراء مستوحاة من بلاط مساجد أصفهان.'},
- {n:'كاشان الوردي',c:'فارسي',o:'كاشان، إيران',img:'1774250100354-3067b5b748ad',s:'200 × 300',m:'صوف نيوزيلندي',k:'400,000',a:'جديدة',p:12900,d:'نسيجٌ كثيف ناعم، بدرجات الوردي العتيق والعاجي، يضفي دفئاً هادئاً على صالات الجلوس.'},
- {n:'شيراز القَبَلي',c:'فارسي',o:'شيراز، إيران',img:'1660394585016-508f949df960',s:'170 × 240',m:'صوف طبيعي',k:'160,000',a:'جديدة',p:9400,old:10800,d:'معيّنات هندسية متتالية بروح قبائل القشقائي الرُّحّل، وألوان مصبوغة نباتياً.'},
- {n:'هيريكي الفيروزي',c:'تركي',o:'هيريكي، تركيا',img:'1588421874990-1fe162747f9b',s:'200 × 290',m:'صوف وقطن',k:'500,000',a:'جديدة',p:11200,t:'جديد',d:'من ورش هيريكي العريقة التي نسجت سجاد قصور العثمانيين، بزرقة النيلة وتفاصيل دقيقة.'},
- {n:'ماندالا قُم',c:'حرير',o:'قُم، إيران',img:'1778809848208-140b81767c4e',s:'135 × 200',m:'حرير على حرير',k:'900,000',a:'جديدة',p:21500,d:'دائرة شمسية من الزخارف المتداخلة، تتلألأ تحت الضوء كأنها مرآة من الحرير.'},
- {n:'كليم الأناضول',c:'كليم',o:'قونية، تركيا',img:'1717744258123-c3aceddf74d1',s:'160 × 230',m:'صوف منسوج مسطح',k:'—',a:'جديدة',p:3200,t:'جديد',d:'نسيجٌ مسطح بلا وبر، برموز قبلية تحكي عن الخصب والحماية. خفيف ومثالي للمساحات اليومية.'},
- {n:'كليم الواحة',c:'كليم',o:'الأطلس، المغرب',img:'1594040226829-7f251ab46d80',s:'200 × 300',m:'صوف وقطن',k:'—',a:'جديدة',p:2750,d:'ألوان الصحراء الدافئة في خطوط ومعيّنات بسيطة، تجمع بين الأصالة وروح البيت العصري.'},
- {n:'نسيم الرمادي',c:'عصري',o:'إسطنبول، تركيا',img:'1616980540826-5542d5aad277',s:'200 × 300',m:'فسكوز ناعم',k:'—',a:'جديدة',p:4600,d:'سطحٌ ناعم بلمعة خفيفة ودرجات رمادية متدرجة، يناسب التصاميم البسيطة والأثاث الحديث.'},
- {n:'خطوط الرمل',c:'عصري',o:'جايبور، الهند',img:'1714926618653-39de3cf5b691',s:'200 × 290',m:'صوف معاد التدوير',k:'—',a:'جديدة',p:3900,old:4500,d:'خطوط هندسية بلون الرمل والفحم، منسوجة يدوياً بصوف مستدام.'},
- {n:'عتيق خراسان',c:'عتيق',o:'خراسان، إيران',img:'1572123979839-3749e9973aba',s:'300 × 420',m:'صوف عتيق',k:'250,000',a:'نحو ٩٠ عاماً',p:32000,t:'قطعة متحفية',g:1,d:'قطعة نجت من القرن الماضي بألوانها الطبيعية التي شاخت بجمال. مرفقة بتقرير تقييم كامل.'},
- {n:'تبريز العاجي',c:'عتيق',o:'تبريز، إيران',img:'1767159601823-96d0295344ce',s:'200 × 300',m:'صوف وحرير',k:'350,000',a:'نحو ٤٠ عاماً',p:15800,d:'أرضية عاجية تتوسطها حديقة من الزهور الحمراء والزرقاء، بحالة ممتازة بعد ترميم دقيق.'},
+/* =========================================================
+   Procedural rug generator — every seed is a new design
+   palette idx: 0 field · 1 field motif · 2 medallion · 3 accent · 4 cream · 5 dark
+   ========================================================= */
+const PALS=[
+  {n:'فُوّة',c:['#8E1F1F','#6A1416','#1C2340','#D9A441','#F1E6D2','#11152A']},
+  {n:'نيلة',c:['#1F2D5A','#172247','#8E1F1F','#D9A441','#EFE3CC','#0C1126']},
+  {n:'عاجي',c:['#E8D8BB','#D6C29F','#8E1F1F','#1C2340','#B8862E','#4A0E10']},
+  {n:'زمرّد',c:['#1E4A3F','#153A31','#8E1F1F','#D9A441','#F1E6D2','#0B1F1A']},
+  {n:'رمل',c:['#CFC3B0','#BBAE98','#3B3A36','#8E7A5A','#EFE8DC','#2A2926']},
 ];
-
-/* products */
-const grid=document.getElementById('products');
-grid.innerHTML=RUGS.map((r,i)=>`
- <article class="card rv" data-c="${r.c}" data-i="${i}">
-  <div class="ph"><img loading="lazy" src="${U(r.img,700)}" alt="${r.n}">
-   ${r.t?`<span class="tag ${r.g?'gold':''}">${r.t}</span>`:''}
-   <button class="heart" aria-label="أضف للمفضلة"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.9 4.5c2.2 0 3.6 1.2 5.1 3 1.5-1.8 2.9-3 5.1-3 3.9 0 6 3.9 4.5 7.3C19.5 16.4 12 21 12 21z"/></svg></button>
-   <span class="quick">نظرة سريعة</span></div>
-  <div class="meta"><span class="origin">${r.o} · ${r.s} سم</span><h3>${r.n}</h3>
-   <div class="price"><b>${fmt(r.p)}</b>${r.old?`<s>${fmt(r.old)}</s>`:''}</div></div>
- </article>`).join('');
-
-/* filters */
-const setFilter=f=>{
-  document.querySelectorAll('#filters button').forEach(b=>b.classList.toggle('on',b.dataset.f===f));
-  grid.querySelectorAll('.card').forEach(c=>c.classList.toggle('hide',f!=='الكل'&&c.dataset.c!==f));
-};
-document.getElementById('filters').onclick=e=>{if(e.target.dataset.f)setFilter(e.target.dataset.f)};
-document.querySelectorAll('[data-go]').forEach(a=>a.addEventListener('click',()=>setFilter(a.dataset.go)));
-
-/* wishlist + quick view */
-let wish=0;const wc=document.getElementById('wishCount');
-const toast=t=>{const el=document.getElementById('toast');el.textContent=t;el.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove('on'),2600)};
-const modal=document.getElementById('modal');
-grid.addEventListener('click',e=>{
-  const card=e.target.closest('.card');if(!card)return;
-  const h=e.target.closest('.heart');
-  if(h){h.classList.toggle('on');wish+=h.classList.contains('on')?1:-1;wc.textContent=wish;wc.classList.toggle('on',wish>0);if(h.classList.contains('on'))toast('أُضيفت إلى المفضلة ♥');return}
-  const r=RUGS[card.dataset.i];
-  document.getElementById('mImg').src=U(r.img,1200);
-  document.getElementById('mOrigin').textContent=r.o;
-  document.getElementById('mName').textContent=r.n;
-  document.getElementById('mDesc').textContent=r.d;
-  document.getElementById('mPrice').textContent=fmt(r.p);
-  document.getElementById('mSpecs').innerHTML=[['المقاس',r.s+' سم'],['الخامة',r.m],['كثافة العقد',r.k==='—'?'نسيج مسطح':r.k+' /م²'],['العمر',r.a]].map(([a,b])=>`<div><small>${a}</small><b>${b}</b></div>`).join('');
-  modal.classList.add('on');
-});
-const closeM=()=>modal.classList.remove('on');
-document.getElementById('mClose').onclick=closeM;
-document.getElementById('mBook').onclick=closeM;
-modal.onclick=e=>{if(e.target===modal)closeM()};
-addEventListener('keydown',e=>{if(e.key==='Escape')closeM()});
-
-/* hero slider */
-const slides=[...document.querySelectorAll('.hero .slide')],dots=[...document.querySelectorAll('#dots button')];let si=0,st;
-const go=i=>{slides[si].classList.remove('on');dots[si].classList.remove('on');si=(i+slides.length)%slides.length;slides[si].classList.add('on');dots[si].classList.add('on')};
-const auto=()=>{clearInterval(st);st=setInterval(()=>go(si+1),6500)};
-dots.forEach((d,i)=>d.onclick=()=>{go(i);auto()});auto();
-
-/* marquee duplicate */
-const mq=document.getElementById('mq');mq.innerHTML+=mq.innerHTML;
-
-/* nav + progress */
-const nav=document.getElementById('nav'),prog=document.getElementById('progress');
-addEventListener('scroll',()=>{nav.classList.toggle('solid',scrollY>60);prog.style.width=(scrollY/(document.documentElement.scrollHeight-innerHeight)*100)+'%'},{passive:true});
-
-/* reveal + counters */
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;e.target.classList.add('in');io.unobserve(e.target);
-  e.target.querySelectorAll('[data-count]').forEach(b=>{const to=+b.dataset.count,t0=performance.now();const tick=t=>{const p=Math.min((t-t0)/1800,1),v=Math.round(to*(1-Math.pow(1-p,3)));b.textContent=(b.hasAttribute('data-plus')?'+':'')+v.toLocaleString('en-US');if(p<1)requestAnimationFrame(tick)};requestAnimationFrame(tick)})
-}),{threshold:.15});
-document.querySelectorAll('.rv').forEach(el=>io.observe(el));
-
-/* lookbook rail */
-const rail=document.getElementById('rail');
-document.getElementById('next').onclick=()=>rail.scrollBy({left:-460,behavior:'smooth'});
-document.getElementById('prev').onclick=()=>rail.scrollBy({left:460,behavior:'smooth'});
-let drag=null;rail.onpointerdown=e=>{drag={x:e.clientX,s:rail.scrollLeft};rail.style.scrollSnapType='none'};
-addEventListener('pointerup',()=>{drag=null;rail.style.scrollSnapType=''});
-rail.onpointermove=e=>{if(drag)rail.scrollLeft=drag.s-(e.clientX-drag.x)};
-
-/* size guide */
-const SIZES=[[80,150],[120,180],[160,230],[200,300],[250,350],[300,400],[350,450],[400,500],[400,600]];
-const L=document.getElementById('L'),W=document.getElementById('W');let margin=.6;
-const notes={'0.6':'سم — يترك ٦٠ سم من الأرضية حول السجادة','0.9':'سم — يناسب جلسات المجلس على الأطراف','0.5':'سم — تمتد تحت ثلثي السرير','0.45':'سم — تتسع للطاولة والكراسي مسحوبة'};
-function plan(){
-  const l=+L.value,w=+W.value;document.getElementById('lv').textContent=l;document.getElementById('wv').textContent=w;
-  const maxL=(l-margin*2)*100,maxW=(w-margin*2)*100;
-  let best=SIZES[0];for(const s of SIZES){if(s[1]<=Math.max(maxL,80)&&s[0]<=Math.max(maxW,50))best=s}
-  document.getElementById('rec').textContent=best[0]+' × '+best[1];
-  document.getElementById('recNote').textContent=notes[String(margin)];
-  // draw room to scale
-  const sc=Math.min(540/l,400/w),rw=l*sc,rh=w*sc,rx=30+(540-rw)/2,ry=30+(400-rh)/2;
-  const R=document.getElementById('roomR');R.setAttribute('x',rx);R.setAttribute('y',ry);R.setAttribute('width',rw);R.setAttribute('height',rh);
-  const gw=best[1]/100*sc,gh=best[0]/100*sc,G=document.getElementById('rugR');
-  G.setAttribute('x',rx+(rw-gw)/2);G.setAttribute('y',ry+(rh-gh)/2);G.setAttribute('width',gw);G.setAttribute('height',gh);
-  const im=document.getElementById('rugImg');im.setAttribute('width',gw);im.setAttribute('height',gh);
-  // furniture: sofa along bottom wall + armchairs
-  const f=document.getElementById('furn'),so=Math.min(2.6,l*.5)*sc,sd=.85*sc;
-  f.innerHTML=`<rect x="${rx+(rw-so)/2}" y="${ry+rh-sd-10}" width="${so}" height="${sd}" rx="8"/>
-   <rect x="${rx+(rw-so*.45)/2}" y="${ry+rh/2-.3*sc}" width="${so*.45}" height="${.6*sc}" rx="6" opacity=".55"/>
-   <rect x="${rx+10}" y="${ry+rh/2-.4*sc}" width="${.8*sc}" height="${.8*sc}" rx="8"/>
-   <rect x="${rx+rw-10-.8*sc}" y="${ry+rh/2-.4*sc}" width="${.8*sc}" height="${.8*sc}" rx="8"/>`;
-  const dl=document.getElementById('dimL');dl.setAttribute('y',ry-8);dl.textContent=l+' م × '+w+' م';
+function rng(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function makeRug(seed,W=61,H=91){
+  const r=rng(seed),cx=(W-1)/2,cy=(H-1)/2;
+  const bw=5+Math.floor(r()*3),bp=[8,10,12][Math.floor(r()*3)],fp=[6,8,10][Math.floor(r()*3)];
+  const k=(W/H)*(0.95+r()*.2),R=Math.min(W,H*k)*(.26+r()*.08),lobe=r()<.5;
+  const g=new Uint8Array(W*H);
+  for(let y=0;y<H;y++)for(let x=0;x<W;x++){
+    const e=Math.min(x,y,W-1-x,H-1-y),dx=Math.abs(x-cx),dy=Math.abs(y-cy);let c=0;
+    if(e===0)c=5;else if(e===1)c=3;
+    else if(e<2+bw){const along=(Math.min(y,H-1-y)<=Math.min(x,W-1-x))?x:y,loc=e-2,mid=(bw-1)/2;
+      const d=Math.abs((along%bp)-bp/2)+Math.abs(loc-mid)*1.2;c=d<1.5?4:d<3?3:d<4.2?0:2}
+    else if(e===2+bw)c=3;else if(e===3+bw)c=5;
+    else{
+      const iy=dy*k;let md=dx+iy;if(lobe)md-=Math.max(0,1.6-Math.abs((dx-iy)%6-3))*.8;
+      const iw=cx-(4+bw),ih=(cy-(4+bw))*k,cd=(iw-dx)+(ih-iy);
+      if(md<2)c=4;else if(md<3.5)c=0;else if(md<5)c=3;
+      else if(md<R-2){c=(Math.floor(md)%5===0)?3:((dx%4===0&&Math.round(iy)%4===0)?4:2)}
+      else if(md<R-1)c=4;else if(md<R)c=3;
+      else if(dx<=1&&iy<R+5)c=3;
+      else if(dx+Math.abs(iy-(R+6.5))<3)c=dx+Math.abs(iy-(R+6.5))<1.2?4:2;
+      else if(cd<R*.55){c=cd>R*.55-1.2?3:(cd<2.5?4:2)}
+      else{const h=fp/2,q=Math.abs((x%fp)-h)+Math.abs((y%fp)-h);c=q<1?3:q===h?1:(q===2?1:0)}
+    }
+    g[y*W+x]=c;
+  }
+  return{W,H,g,seed};
 }
-L.oninput=W.oninput=plan;
-document.getElementById('room').onclick=e=>{const b=e.target.closest('button');if(!b)return;document.querySelectorAll('#room button').forEach(x=>x.classList.toggle('on',x===b));margin=+b.dataset.m;plan()};
-plan();
+const hex2=h=>[parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)];
+function hash(x,y,s){let h=(x*374761393+y*668265263+s*1442695041)>>>0;h=Math.imul(h^(h>>>13),1274126177)>>>0;return(h&1023)/1023}
+function renderRug(rug,pal,cell=12){
+  const cv=document.createElement('canvas');cv.width=rug.W*cell;cv.height=rug.H*cell;const x=cv.getContext('2d');
+  const rgb=pal.map(hex2);
+  for(let j=0;j<rug.H;j++)for(let i=0;i<rug.W;i++){
+    const c=rgb[rug.g[j*rug.W+i]],f=.88+hash(i,j,rug.seed)*.2;
+    x.fillStyle=`rgb(${c[0]*f|0},${c[1]*f|0},${c[2]*f|0})`;x.fillRect(i*cell,j*cell,cell,cell);
+    x.fillStyle='rgba(255,255,255,.07)';x.fillRect(i*cell+1,j*cell+1,cell/2-1,cell-3);
+    x.fillStyle='rgba(0,0,0,.16)';x.fillRect(i*cell,j*cell+cell-2,cell,2);x.fillRect(i*cell+cell/2,j*cell,1,cell);
+  }
+  // soft wear / sheen
+  const gr=x.createLinearGradient(0,0,cv.width,cv.height);gr.addColorStop(0,'rgba(255,255,255,.06)');gr.addColorStop(.5,'rgba(0,0,0,0)');gr.addColorStop(1,'rgba(0,0,0,.12)');x.fillStyle=gr;x.fillRect(0,0,cv.width,cv.height);
+  return cv;
+}
+function paintWeave(ctx,off,rug,rows,cell=12){
+  const Wp=rug.W*cell,Hp=rug.H*cell;ctx.clearRect(0,0,Wp,Hp);
+  // warp threads
+  ctx.fillStyle='rgba(239,227,204,.38)';for(let i=0;i<rug.W;i++)ctx.fillRect(i*cell+cell/2-1,0,1.5,Hp);
+  const full=Math.min(rug.H,Math.floor(rows)),frac=rows-Math.floor(rows),sy=(rug.H-full)*cell;
+  if(full>0)ctx.drawImage(off,0,sy,Wp,full*cell,0,sy,Wp,full*cell);
+  if(full<rug.H){
+    const n=Math.floor(frac*rug.W),py=sy-cell;
+    if(n>0)ctx.drawImage(off,Wp-n*cell,py,n*cell,cell,Wp-n*cell,py,n*cell,cell);
+    // weft bar + shuttle
+    ctx.fillStyle='#D9A441';ctx.shadowColor='#D9A441';ctx.shadowBlur=18;ctx.fillRect(0,py-3,Wp,2);
+    ctx.beginPath();ctx.arc(Wp-n*cell,py+cell/2,cell*.55,0,7);ctx.fill();ctx.shadowBlur=0;
+  }
+}
 
-/* booking */
-document.getElementById('book').onsubmit=e=>{e.preventDefault();e.target.reset();toast('تم استلام حجزك ✓ سنتواصل معك لتأكيد الموعد')};
+/* ================= HUD: chapters, thread, cursor ================= */
+const chN=document.getElementById('chapN'),chT=document.getElementById('chapT');
+const chaps=[...document.querySelectorAll('[data-chap]')];
+const setChap=i=>{chN.textContent=AR.format(i+1).padStart(2,'٠');gsap.fromTo(chT,{yPercent:100},{yPercent:0,duration:.6,ease:'expo.out'});chT.textContent=chaps[i].dataset.chap};
+const tf=document.getElementById('threadFill');
+ScrollTrigger.create({start:0,end:'max',onUpdate:s=>tf.style.height=(s.progress*100)+'%'});
+const cur=document.getElementById('cursor');
+addEventListener('pointermove',e=>gsap.to(cur,{x:e.clientX,y:e.clientY,duration:.25,ease:'power3'}));
+document.addEventListener('pointerover',e=>cur.classList.toggle('big',!!e.target.closest('a,button,canvas,.hang')));
 
-/* loader */
-addEventListener('load',()=>setTimeout(()=>{document.getElementById('loader').classList.add('done');document.body.classList.add('ready')},1900));
-setTimeout(()=>{document.getElementById('loader').classList.add('done');document.body.classList.add('ready')},5000);
+/* ================= 01 intro ================= */
+const warps=document.getElementById('warps');for(let i=0;i<41;i++)warps.appendChild(document.createElement('i'));
+const thrPath=document.getElementById('thrPath');let tt=0,introOn=true;
+(function thread(){tt+=.016;if(introOn){const w=innerWidth,h=innerHeight;let d=`M0 ${h*.62}`;for(let x=0;x<=w;x+=20){d+=` L${x} ${h*.62+Math.sin(x*.006+tt*1.6)*18+Math.sin(x*.017-tt)*6}`}thrPath.setAttribute('d',d)}requestAnimationFrame(thread)})();
+const l2w=document.querySelectorAll('#intro .l2 .w');gsap.set(l2w,{opacity:0,y:40,filter:'blur(10px)'});
+gsap.from('#intro .l1 .w',{opacity:0,y:50,filter:'blur(12px)',stagger:.12,duration:1.2,ease:'power3.out',delay:.3});
+gsap.from(thrPath,{strokeDasharray:'0 4000',duration:2.4,ease:'power2.inOut'});
+const tlI=gsap.timeline({scrollTrigger:{trigger:'#intro',start:'top top',end:'+=160%',scrub:1,pin:true,onToggle:s=>{introOn=s.isActive||s.progress<1;if(s.isActive)setChap(0)}}});
+tlI.to('.hint',{opacity:0,duration:.1})
+   .to('#intro .l1 .w',{opacity:0,y:-40,filter:'blur(10px)',stagger:.05,duration:.3})
+   .to(l2w,{opacity:1,y:0,filter:'blur(0px)',stagger:.08,duration:.35},'-=.1')
+   .to('#thrSvg',{scaleY:.02,opacity:0,duration:.35},'+=.15')
+   .to('#warps i',{scaleY:1,stagger:{each:.008,from:'center'},duration:.4},'<')
+   .to('#intro .lines',{opacity:0,scale:.92,duration:.3},'+=.05');
+
+/* ================= 02 loom ================= */
+const RUG=makeRug(1999),CELL=12,OFF=renderRug(RUG,PALS[0].c,CELL);
+const lc=document.getElementById('loomCanvas');lc.width=RUG.W*CELL;lc.height=RUG.H*CELL;const lctx=lc.getContext('2d');
+const W8={p:0};paintWeave(lctx,OFF,RUG,0,CELL);
+const caps=[...document.querySelectorAll('#caps span')];let capI=-1;
+const kn=document.getElementById('knots'),dy=document.getElementById('days'),rc=document.getElementById('rowsC'),pc=document.getElementById('pct');
+function onWeave(){
+  const rows=W8.p*RUG.H;paintWeave(lctx,OFF,RUG,rows,CELL);
+  kn.textContent=ar(W8.p*1000000);dy.textContent=ar(W8.p*420);rc.textContent=ar(Math.min(91,rows));pc.textContent=ar(W8.p*100)+'٪';
+  const ci=(W8.p<.01||W8.p>.995)?-1:W8.p<.3?0:W8.p<.55?1:W8.p<.8?2:3;
+  if(ci!==capI){caps.forEach((c,i)=>{if(i!==ci)gsap.to(c,{opacity:0,y:-20,duration:.3,overwrite:true})});if(ci>=0)gsap.fromTo(caps[ci],{opacity:0,y:20},{opacity:1,y:0,duration:.5,overwrite:true});capI=ci}
+}
+const tlL=gsap.timeline({scrollTrigger:{trigger:'#loom',start:'top top',end:'+=420%',scrub:1,pin:true,onToggle:s=>s.isActive&&setChap(1)}});
+tlL.from('#rugwrap',{scale:.85,opacity:0,duration:.06})
+   .to(W8,{p:1,ease:'none',duration:.66,onUpdate:onWeave})
+   .to('#fringeT',{opacity:1,duration:.02})
+   .to('.side',{opacity:0,duration:.05})
+   .to('.beam',{opacity:0,y:i=>i?60:-60,duration:.06},'<')
+   .to('#rugwrap',{rotateX:58,rotateZ:-14,scale:1.18,y:'14vh',duration:.16,ease:'power2.inOut'})
+   .to('#loomCanvas',{boxShadow:'0 80px 60px -20px rgba(0,0,0,.75)',duration:.16},'<')
+   .fromTo('#doneT',{opacity:0,y:40,filter:'blur(14px)'},{opacity:1,y:0,filter:'blur(0px)',duration:.08},'-=.08')
+   .to({},{duration:.05});
+
+/* ================= 03 dyes ================= */
+document.querySelectorAll('.dye .mini').forEach(m=>{const p=[PALS[0],PALS[1],PALS[2]][+m.dataset.pal];const cv=renderRug(makeRug(77+ +m.dataset.pal*13),[p.c[0],p.c[1],p.c[2],p.c[3],p.c[4],p.c[5]],6);
+  // remap for clearer per-dye look
+  m.style.backgroundImage=`url(${cv.toDataURL()})`});
+document.querySelectorAll('.dust').forEach(d=>{for(let i=0;i<26;i++){const b=document.createElement('b'),s=2+Math.random()*7;Object.assign(b.style,{width:s+'px',height:s+'px',left:Math.random()*100+'%',top:'100%',animationDuration:(7+Math.random()*10)+'s',animationDelay:(-Math.random()*15)+'s'});d.appendChild(b)}});
+const tlD=gsap.timeline({scrollTrigger:{trigger:'#dyes',start:'top top',end:'+=380%',scrub:1,pin:true,onToggle:s=>s.isActive&&setChap(2)}});
+tlD.from('#dyes .pre h2',{opacity:0,scale:1.15,filter:'blur(16px)',duration:.12})
+   .to({},{duration:.06});
+['.d1','.d2','.d3'].forEach((s,i)=>{
+  tlD.to(s,{clipPath:'circle(150% at 50% 50%)',duration:.18,ease:'power2.in'})
+     .from(s+' .word',{xPercent:-25,opacity:0,duration:.1},'-=.06')
+     .from(s+' .mini',{y:120,rotate:-12,opacity:0,duration:.1},'<')
+     .from(s+' p,'+s+' .hex',{opacity:0,y:20,duration:.08},'-=.04')
+     .to({},{duration:.08});
+});
+
+/* ================= 04 macro ================= */
+const tlM=gsap.timeline({scrollTrigger:{trigger:'#macro',start:'top top',end:'+=260%',scrub:1,pin:true,onToggle:s=>s.isActive&&setChap(3)}});
+tlM.from('#m1',{opacity:0,scale:.8,duration:.1})
+   .to('#lens',{opacity:1,scale:1,duration:.12})
+   .to('#m1',{opacity:0,duration:.08},'<')
+   .to('#macroImg',{scale:7,duration:.5,ease:'power2.in'},'<')
+   .to('#lens',{scale:5,opacity:0,duration:.25},'-=.25')
+   .fromTo('#m2',{opacity:0,y:30},{opacity:1,y:0,duration:.12})
+   .to({},{duration:.08});
+
+/* ================= 05 bazaar ================= */
+const HANG=[['تبريز','1652634213812-f0deeb1de78e','إيران · ١٩٨٠'],['كاشان','1774250100354-3067b5b748ad','إيران · ٢٠١٩'],['أصفهان','1531162805941-58330188d75c','حرير خالص'],['شيراز','1660394585016-508f949df960','قبلي · صوف'],['قُم','1778809848208-140b81767c4e','حرير على حرير'],['هيريكي','1588421874990-1fe162747f9b','تركيا'],['كليم','1717744258123-c3aceddf74d1','الأناضول'],['خراسان','1572123979839-3749e9973aba','عتيق · ٩٠ عاماً'],['تبريز العاجي','1767159601823-96d0295344ce','إيران · ١٩٨٥'],['ملايِر','1594847915592-2a7ef568e2b6','إيران']];
+const track=document.getElementById('track');
+HANG.forEach(([n,id,s],i)=>track.insertAdjacentHTML('beforeend',`<div class="hang" style="animation-delay:${-i*.7}s"><div class="sw"><div class="pins"><i></i><i></i></div><div class="rug" style="background-image:url(${U(id,600)})"></div><div class="lab"><b>${n}</b><span>${s}</span></div></div></div>`));
+const swings=gsap.utils.toArray('.hang .sw');const swingTo=gsap.quickTo(swings,'rotate',{duration:.8,ease:'power3'});
+gsap.to(track,{x:()=>track.scrollWidth-innerWidth,ease:'none',scrollTrigger:{trigger:'#bazaar',start:'top top',end:()=>'+='+(track.scrollWidth-innerWidth),scrub:1,pin:true,invalidateOnRefresh:true,
+  onToggle:s=>s.isActive&&setChap(4),onUpdate:s=>{swingTo(gsap.utils.clamp(-14,14,s.getVelocity()/-180));clearTimeout(swingTo.t);swingTo.t=setTimeout(()=>swingTo(0),120)}}});
+
+/* ================= 06 flight ================= */
+const stars=document.getElementById('stars');for(let i=0;i<160;i++){const s=document.createElement('i');Object.assign(s.style,{left:Math.random()*100+'%',top:Math.random()*70+'%',opacity:.3+Math.random()*.7,animationDelay:-Math.random()*3+'s',transform:`scale(${.5+Math.random()*1.2})`});stars.appendChild(s)}
+const flyRug=makeRug(4242,91,61),flyCv=renderRug(flyRug,PALS[0].c,6),flyURL=flyCv.toDataURL();
+const cb=document.getElementById('carpetBody'),SL=22;for(let i=0;i<SL;i++){const s=document.createElement('i');s.style.backgroundImage=`url(${flyURL})`;s.style.backgroundSize=`${SL*100}% 100%`;s.style.backgroundPosition=`${i/(SL-1)*100}% 0`;s.style.animationDelay=(-i*.11)+'s';cb.appendChild(s)}
+const sparks=document.getElementById('sparks');for(let i=0;i<30;i++)sparks.appendChild(document.createElement('b'));
+const sp=[...sparks.children];
+const tlF=gsap.timeline({scrollTrigger:{trigger:'#flight',start:'top top',end:'+=320%',scrub:1,pin:true,onToggle:s=>s.isActive&&setChap(5),
+  onUpdate:()=>{const r=document.getElementById('carpet').getBoundingClientRect();sp.forEach((b,i)=>{gsap.to(b,{x:r.right-20+Math.random()*60,y:r.top+r.height*.6+Math.random()*30,opacity:Math.random(),duration:.6+i*.05,ease:'power2.out'})})}}});
+tlF.fromTo('#carpet',{x:'75vw',y:'22vh',rotate:6,scale:.5},{keyframes:[{x:'30vw',y:'-6vh',rotate:-4,scale:.8,duration:.3},{x:'0vw',y:'4vh',rotate:2,scale:1,duration:.25},{x:'-40vw',y:'-14vh',rotate:-6,scale:.85,duration:.25},{x:'-95vw',y:'-30vh',rotate:-10,scale:.6,duration:.2}],ease:'none'})
+   .fromTo('#f1',{opacity:0,y:30,filter:'blur(10px)'},{opacity:1,y:0,filter:'blur(0px)',duration:.12},.08)
+   .to('#f1',{opacity:0,y:-30,duration:.1},.4)
+   .fromTo('#f2',{opacity:0,y:30,filter:'blur(10px)'},{opacity:1,y:0,filter:'blur(0px)',duration:.12},.52)
+   .to('#dune1',{x:'6vw',duration:1,ease:'none'},0)
+   .to('#dune2',{x:'12vw',duration:1,ease:'none'},0)
+   .to('#dune3',{x:'20vw',duration:1,ease:'none'},0)
+   .to('.moon',{y:'-6vh',duration:1,ease:'none'},0);
+
+/* ================= 07 forge ================= */
+const fc=document.getElementById('forgeCanvas'),fctx=fc.getContext('2d');let pal=0,seed=4821,fOff,fRug,fAnim;
+const chips=document.getElementById('chips');PALS.forEach((p,i)=>chips.insertAdjacentHTML('beforeend',`<button title="${p.n}" class="${i?'':'on'}" style="background:${p.c[0]}"><i style="background:${p.c[2]}"></i></button>`));
+chips.onclick=e=>{const b=e.target.closest('button');if(!b)return;pal=[...chips.children].indexOf(b);[...chips.children].forEach(c=>c.classList.toggle('on',c===b));forge(false)};
+function forge(newSeed=true){
+  if(newSeed)seed=1000+Math.floor(Math.random()*8999);
+  fRug=makeRug(seed);fOff=renderRug(fRug,PALS[pal].c,CELL);fc.width=fRug.W*CELL;fc.height=fRug.H*CELL;
+  document.getElementById('serial').textContent='نَوْل № '+new Intl.NumberFormat('ar-EG',{useGrouping:false}).format(seed);
+  const r=rng(seed),sizes=['٢٠٠×٣٠٠','٢٥٠×٣٥٠','١٧٠×٢٤٠','٣٠٠×٤٠٠'];
+  document.getElementById('specs').innerHTML=`<div><small>كثافة العقد</small>${ar(300+Math.floor(r()*700))} ألف/م²</div><div><small>المقاس</small>${sizes[Math.floor(r()*4)]} سم</div><div><small>مدة النسج</small>${ar(8+Math.floor(r()*12))} شهراً</div>`;
+  cancelAnimationFrame(fAnim);const t0=performance.now(),D=2600;
+  (function step(t){const p=Math.min((t-t0)/D,1),e=1-Math.pow(1-p,2);paintWeave(fctx,fOff,fRug,e*fRug.H,CELL);if(p<1)fAnim=requestAnimationFrame(step)})(t0);
+}
+document.getElementById('weaveBtn').onclick=()=>forge(true);
+ScrollTrigger.create({trigger:'#forge',start:'top 60%',once:true,onEnter:()=>forge(false)});
+ScrollTrigger.create({trigger:'#forge',start:'top center',end:'bottom center',onToggle:s=>s.isActive&&setChap(6)});
+gsap.to('#forge .reveal-up',{opacity:1,y:0,stagger:.15,duration:1,ease:'power3.out',scrollTrigger:{trigger:'#forge',start:'top 65%'}});
+
+/* ================= 08 outro ================= */
+const tlO=gsap.timeline({scrollTrigger:{trigger:'#outro',start:'top top',end:'+=120%',scrub:1,pin:true,onToggle:s=>s.isActive&&setChap(7)}});
+tlO.to('#outro .draw',{strokeDashoffset:0,stagger:.05,duration:.4})
+   .to('#outro .fillm',{opacity:1,duration:.1})
+   .to('#outro .reveal-up',{opacity:1,y:0,stagger:.08,duration:.2});
+
+/* ================= Film mode — smooth auto-scroll for screen recording =================
+   Click the button (or press F). Space = pause, ↑/↓ = speed, Esc = stop. */
+let filming=false,paused=false,speed=170,last=0,fy=0;
+const cd=document.getElementById('countdown');
+function film(){
+  if(filming)return stopFilm();
+  filming=true;document.body.classList.add('filming');scrollTo(0,0);fy=0;
+  const tl=gsap.timeline({onComplete:()=>{last=performance.now();requestAnimationFrame(roll)}});
+  ['٣','٢','١'].forEach(n=>tl.set(cd,{textContent:n}).fromTo(cd,{opacity:1,scale:1.3},{opacity:0,scale:.7,duration:.9,ease:'power2.in'}));
+}
+function roll(t){if(!filming)return;const dt=Math.min(t-last,50)/1000;last=t;
+  if(!paused){fy+=speed*dt;scrollTo(0,fy);if(fy>=document.documentElement.scrollHeight-innerHeight){setTimeout(stopFilm,2500);return}}
+  requestAnimationFrame(roll)}
+function stopFilm(){filming=false;document.body.classList.remove('filming')}
+document.getElementById('filmBtn').onclick=film;
+addEventListener('keydown',e=>{
+  if(e.key==='f'||e.key==='F'||e.key==='ب')film();
+  if(!filming)return;
+  if(e.key===' '){e.preventDefault();paused=!paused;fy=scrollY;last=performance.now()}
+  if(e.key==='ArrowUp'){e.preventDefault();speed=Math.min(600,speed+40)}
+  if(e.key==='ArrowDown'){e.preventDefault();speed=Math.max(60,speed-40)}
+  if(e.key==='Escape')stopFilm();
+});
+addEventListener('wheel',()=>{if(filming){fy=scrollY}},{passive:true});
+addEventListener('load',()=>ScrollTrigger.refresh());
 </script>
 </body>
 </html>
